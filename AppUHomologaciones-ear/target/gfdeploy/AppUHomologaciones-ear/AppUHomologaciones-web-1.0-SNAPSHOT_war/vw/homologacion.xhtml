@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Homologaciones</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Homologaciones">
+                <h:panelGrid columns="4" cellpadding="5">
+                    <h:outputLabel for="selectUOrigen" value="Universidad Origen: " />
+                    <p:selectOneMenu  id="selectUOrigen" 
+                                      value="#{homologacionBean.universidadOrigen}">
+                        <f:selectItem id="itemSelectUOrigen" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblUniversidads}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombreUniversidad}" 
+                                       itemValue="#{entry.idUniversidad}" />
+                        <f:ajax event="change" render="form:selectPOrigen"
+                                listener="#{homologacionBean.filtrarProgramaUniOrigen}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel for="selectUDestino" value="Universidad Destino: " />
+                    <p:selectOneMenu  id="selectUDestino" 
+                                      value="#{homologacionBean.universidadDestino}">
+                        <f:selectItem id="itemSelectUDestino" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblUniversidads}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombreUniversidad}" 
+                                       itemValue="#{entry.idUniversidad}" />
+                        <f:ajax event="change" render="form:selectPDestino"
+                                listener="#{homologacionBean.filtrarProgramaUniDestino}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel for="selectPOrigen" value="Programa Origen: " />
+                    <p:selectOneMenu  id="selectPOrigen" 
+                                      value="#{homologacionBean.programaOrigen}">
+                        <f:selectItem id="itemselectPOrigen" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblProgramases}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombrePrograma}" 
+                                       itemValue="#{entry.idPrograma}" />
+                        <f:ajax event="change" render="form:selectMOrigen"
+                                listener="#{homologacionBean.filtrarMateriaProgOrigen}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel for="selectPDestino" value="Programa Destino: " />
+                    <p:selectOneMenu  id="selectPDestino" 
+                                      value="#{homologacionBean.programaDestino}">
+                        <f:selectItem id="itemSelectPDestino" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblProgramases2}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombrePrograma}" 
+                                       itemValue="#{entry.idPrograma}" />
+                        <f:ajax event="change" render="form:selectMDestino"
+                                listener="#{homologacionBean.filtrarMateriaProgDestino}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel for="selectMOrigen" value="Materia Origen: " />
+                    <p:selectOneMenu  id="selectMOrigen" 
+                                      value="#{homologacionBean.materiaOrigen}">
+                        <f:selectItem id="itemSelectMOrigen" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblMateriases}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombreMateria}" 
+                                       itemValue="#{entry.idMateria}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel for="selectMDestino" value="Materia Destino: " />
+                    <p:selectOneMenu  id="selectMDestino" 
+                                      value="#{homologacionBean.materiaDestino}">
+                        <f:selectItem id="itemSelectMDestino" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{homologacionBean.tblMateriases2}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombreMateria}" 
+                                       itemValue="#{entry.idMateria}" />
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{homologacionBean.guardar}" 
+                                         update=":mensajes, form"
+                                         rendered="#{!homologacionBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{homologacionBean.modificar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{homologacionBean.habilitarBoton}"
+                                        />
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="hom" value="#{homologacionBean.tblHomologacions}"
+                                 paginator="true" rows="#{homologacionBean.tblHomologacions.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                        <p:column headerText="Universidad Origen" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.universidadOrigen.nombreUniversidad}"/>
+                        </p:column>
+                        <p:column headerText="Universidad Destino" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.universidadDestino.nombreUniversidad}" />
+                        </p:column>
+                        <p:column headerText="Programa Origen" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.programaOrigen.nombrePrograma}"/>
+                        </p:column>
+                        <p:column headerText="Programa Destino" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.programaDestino.nombrePrograma}" />
+                        </p:column>
+                        <p:column headerText="Materia Origen" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.materiaOrigen.nombreMateria}"/>
+                        </p:column>
+                        <p:column headerText="Materia Destino" style="width:14px;text-align: center">
+                            <h:outputText value="#{hom.materiaDestino.nombreMateria}" />
+                        </p:column>
+                        <p:column style="width:14px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="Seleccionar"
+                                             id="verButton"
+                                             action="#{homologacionBean.seleccionarObjeto}"
+                                             >
+                                <f:setPropertyActionListener value="#{hom}" 
+                                                             target="#{homologacionBean.tblHomologacion}" />
+                           </p:commandButton>
+                       </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

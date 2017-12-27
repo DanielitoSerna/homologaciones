@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Menú</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </h:head>
+    <h:body>
+        <h:form id="formMenu">  
+            <p:growl id="messages"/>
+            <p:menubar>
+                <p:submenu label="Seguridad" 
+                           icon="ui-icon-locked"
+                           rendered="#{loginBean.todo}">
+                    <p:menuitem value="Roles" 
+                                url="/vw/roles.xhtml"
+                                icon="ui-icon-newwin" 
+                                rendered="#{loginBean.todo}"/>
+                    <p:separator />
+                    <p:menuitem value="Usuarios" 
+                                url="/vw/usuarios.xhtml" 
+                                icon="ui-icon-person"
+                                rendered="#{loginBean.todo}"/>
+                </p:submenu>
+                
+                <p:menuitem value="Universidades" 
+                            url="/vw/universidades.xhtml" 
+                            icon="ui-icon-disk" 
+                            rendered="#{loginBean.todo}"/>
+
+                <p:submenu label="Carreras y Materias" 
+                           icon="ui-icon-pin-s">
+                    <p:menuitem value="Carreras" 
+                                url="/vw/programas.xhtml" 
+                                icon="ui-icon-clipboard" />
+                    <p:separator />
+                    <p:menuitem value="Materias" 
+                                url="/vw/materias.xhtml" 
+                                icon="ui-icon-pin-w"/>
+                </p:submenu>
+
+                <p:menuitem value="Homologaciones" 
+                            url="homologacion.xhtml" 
+                            icon="ui-icon-transfer-e-w" />
+                
+                <p:menuitem value="Búsqueda" 
+                            url="busqueda.xhtml" 
+                            icon="ui-icon-search" />
+                
+                <f:facet name="options">
+                    <p:commandButton value="Cerrar Sesión" 
+                                     icon="ui-icon-extlink"
+                                     actionListener="#{loginBean.logoutPrueba}"
+                                     update=":formMenu"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </h:body>
+    <script type="text/javascript">
+   //<![CDATA[   function logout(xhr, status, args) {
+     setTimeout(function() {
+       window.location = 'login.xhtml';
+     }, 500);
+   } //]]> </script>
+</html>

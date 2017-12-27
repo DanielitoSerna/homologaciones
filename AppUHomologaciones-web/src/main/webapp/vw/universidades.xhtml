@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Universidades</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Universidades">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="nombre" value="Universidad: " />
+                    <p:inputText value="#{universidadBean.nombreUniversidad}" id="nombre"
+                                 required="false" label="contrasena" />
+                    <h:outputLabel for="nit" value="Nit: " />
+                    <p:inputText value="#{universidadBean.nit}" id="nit"
+                                 required="false" label="nit" />
+                    <h:outputText value="Acreditada: " />
+                    <p:selectBooleanCheckbox value="#{universidadBean.acreditada}" />
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{universidadBean.guardar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{!universidadBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{universidadBean.modificar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{universidadBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="eliminarButton" value="Eliminar"
+                                         actionListener="#{universidadBean.eliminar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{universidadBean.habilitarBoton}"
+                                        />
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="univ" value="#{universidadBean.tblUniversidads}"
+                                 paginator="true" rows="#{universidadBean.tblUniversidads.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                        <p:column headerText="Código Universidad" style="width:17px;text-align: center">
+                            <h:outputText value="#{univ.idUniversidad}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Universidad" style="width:17px;text-align: center">
+                            <h:outputText value="#{univ.nombreUniversidad}" />
+                        </p:column>
+                        <p:column headerText="Nit" style="width:17px;text-align: center">
+                            <h:outputText value="#{univ.nit}" />
+                        </p:column>
+                        <p:column headerText="Acreditada" style="width:17px;text-align: center">
+                            <h:outputText value="#{univ.acreditada}" />
+                        </p:column>
+                        <p:column headerText="Estado" style="width:17px;text-align: center">
+                            <h:outputText value="#{univ.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column style="width:17px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="View"
+                                             id="verButton"
+                                             action="#{universidadBean.seleccionarObjeto}"
+                                             >
+                                <f:setPropertyActionListener value="#{univ}" 
+                                                             target="#{universidadBean.tblUniversidad}" />
+                           </p:commandButton>
+                       </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Materias</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Materias">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="codigoInterno" value="Código Interno: " />
+                    <p:inputText value="#{materiaBean.codigoInterno}" id="codigoInterno"
+                                 required="false" label="codigoInterno" />
+                    <h:outputLabel for="nombreMateria" value="Nombre Materia: " />
+                    <p:inputText value="#{materiaBean.nombreMateria}" id="nombreMateria"
+                                 required="false" label="codigoInterno" />
+                    <h:outputLabel for="selectPrograma" value="Nombre Programa: " />
+                    <p:selectOneMenu  id="selectPrograma" 
+                                      value="#{materiaBean.programaPertenece}">
+                        <f:selectItem id="itemSeleccione" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{materiaBean.tblProgramases}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombrePrograma}" 
+                                       itemValue="#{entry.idPrograma}" />
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{materiaBean.guardar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{!materiaBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{materiaBean.modificar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{materiaBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="eliminarButton" value="Eliminar"
+                                         actionListener="#{materiaBean.eliminar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{materiaBean.habilitarBoton}"
+                                        />
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="mat" value="#{materiaBean.tblMateriases}"
+                                 paginator="true" rows="#{materiaBean.tblMateriases.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                        <p:column headerText="Código Materia" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.codigoInterno}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Materia" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.nombreMateria}" />
+                        </p:column>
+                        <p:column headerText="Programa" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.idPrograma.nombrePrograma}" />
+                        </p:column>
+                        <p:column headerText="Estado" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column style="width:20px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="View"
+                                             id="verButton"
+                                             action="#{materiaBean.seleccionarObjeto}"
+                                             >
+                                <f:setPropertyActionListener value="#{mat}" 
+                                                             target="#{materiaBean.tblMaterias}" />
+                           </p:commandButton>
+                       </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

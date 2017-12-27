@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Roles</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Roles">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="codigo" value="Código:" />
+                    <p:inputNumber value="#{rolesBean.codigo}" id="codigo"
+                                   required="false" label="codigo" 
+                                   disabled="#{!rolesBean.habilitarCodigo}" />
+                    <h:outputLabel for="nombre" value="Nombre rol:" />
+                    <p:inputText value="#{rolesBean.nombreRol}" id="nombre"
+                                 required="false" label="nombre" />
+                    <h:outputLabel for="descripcion" value="Descripción:" />
+                    <p:inputText value="#{rolesBean.descripcionRol}" id="descripcion"
+                                 required="false" label="nombre" />
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{rolesBean.guardar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{!rolesBean.habilitarBoton}"
+                                         >
+                            <f:ajax execute="guardarButton" render="@form"/>
+                        </p:commandButton>
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{rolesBean.modifiar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{rolesBean.habilitarBoton}"
+                                         />
+                        <p:commandButton id="eliminarButton" value="Eliminar"
+                                         actionListener="#{rolesBean.eliminar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{rolesBean.habilitarBoton}"
+                                         />
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="rol" value="#{rolesBean.roleses}"
+                                 paginator="true" rows="#{rolesBean.roleses.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                        <p:column headerText="Nombre del rol" style="width:25px;text-align: center">
+                            <h:outputText value="#{rol.nombreRol}" style="width:25px;text-align: center"/>
+                        </p:column>
+                        <p:column headerText="Descripción del rol" style="width:25px;text-align: center">
+                            <h:outputText value="#{rol.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Estado" style="width:25px;text-align: center">
+                            <h:outputText value="#{rol.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column style="width:25px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="Seleccionar"
+                                             id="verButton"
+                                             action="#{rolesBean.seleccionarObjeto}"
+                                             >
+                                <f:ajax execute="verButton" render="@form"/>
+                                <f:setPropertyActionListener value="#{rol}" 
+                                                             target="#{rolesBean.tblRoles}" />
+                           </p:commandButton>
+                       </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

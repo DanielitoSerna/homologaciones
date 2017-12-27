@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Usuarios</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Usuarios">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="usuario" value="Usuario: " />
+                    <p:inputText value="#{usuarioBean.nombreUsuario}" id="usuario"
+                                   required="false" label="usuario" 
+                                   disabled="#{!usuarioBean.habilitarCodigo}"/>
+                    <h:outputLabel for="contrasena" value="Contraseña: " />
+                    <p:password value="#{usuarioBean.clave}" id="contrasena"
+                                 required="false" label="contrasena" />
+                    <h:outputLabel for="repeClave" value="Repetir Contraseña: " />
+                    <p:password value="#{usuarioBean.claveRepetir}" id="repeClave"
+                                required="false" label="repeClave" />
+                    <h:outputLabel for="correo" value="Correo: " />
+                    <p:inputText value="#{usuarioBean.correo}" id="correo"
+                                 required="false" label="correo">
+                        <!--<f:validator validatorId="custom.emailValidator"  />-->
+                    </p:inputText>
+                    <h:outputLabel for="selectRol" value="Rol: " />
+                    <p:selectOneMenu  id="selectRol" 
+                                      value="#{usuarioBean.rol}">
+                        <f:selectItem id="itemSeleccione" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{usuarioBean.roleses}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombreRol}" 
+                                       itemValue="#{entry.codRol}" />
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{usuarioBean.guardar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{!usuarioBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{usuarioBean.modificar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{usuarioBean.habilitarBoton}"
+                                        />
+                        
+                        <p:commandButton id="eliminarButton" value="Eliminar"
+                                         actionListener="#{usuarioBean.eliminar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{usuarioBean.habilitarBoton}"
+                                        />
+                    </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="usu" value="#{usuarioBean.usuarios}"
+                                 paginator="true" rows="#{usuarioBean.usuarios.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                        <p:column headerText="Usuario" style="width:25px;text-align: center">
+                            <h:outputText value="#{usu.usuario}" style="width:25px;text-align: center"/>
+                        </p:column>
+                        <p:column headerText="Correo" style="width:25px;text-align: center">
+                            <h:outputText value="#{usu.correo}" />
+                        </p:column>
+                        <p:column headerText="Estado" style="width:25px;text-align: center">
+                            <h:outputText value="#{usu.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column style="width:25px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="View"
+                                             id="verButton"
+                                             action="#{usuarioBean.seleccionarObjeto}"
+                                             >
+                                <f:setPropertyActionListener value="#{usu}" 
+                                                             target="#{usuarioBean.tblUsuario}" />
+                           </p:commandButton>
+                       </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
