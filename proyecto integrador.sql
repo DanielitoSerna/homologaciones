@@ -90,6 +90,29 @@ WITH (
 ALTER TABLE tbl_programas
   OWNER TO homologa;
   
+CREATE TABLE tbl_plan_programa
+(
+	id_plan_programa serial NOT NULL,
+	codigo_plan character varying(20) NOT NULL,
+	nombre_plan character varying(200) NOT NULL,
+	fecha_inicio date NOT NULL,
+	fecha_vigencia date NULL,
+	id_programa integer NOT NULL,
+	id_estado numeric(10,0) NOT NULL,
+	CONSTRAINT tbl_plan_programa_pkey PRIMARY KEY (id_plan_programa),
+	CONSTRAINT fk_id_programa_plan FOREIGN KEY (id_programa)
+      REFERENCES tbl_programas (id_programa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT fk_estado_plan FOREIGN KEY (id_estado)
+      REFERENCES tbl_estado (id_estado) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tbl_plan_programa
+  OWNER TO homologa;
+  
   
 CREATE TABLE tbl_materias
 (
@@ -146,3 +169,5 @@ WITH (
 );
 ALTER TABLE tbl_homologacion
   OWNER TO homologa;
+  
+  
