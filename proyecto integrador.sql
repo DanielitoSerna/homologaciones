@@ -144,6 +144,8 @@ CREATE TABLE tbl_homologacion
   universidad_destino integer NOT NULL,
   programa_destino integer NOT NULL,
   materia_destino integer NOT NULL,
+  plan_origen integer NOT NULL,
+  plan_destino integer NOT NULL,
   CONSTRAINT tbl_homologa_pkey PRIMARY KEY (id_homologa),
   CONSTRAINT fk_id_u1 FOREIGN KEY (universidad_origen)
       REFERENCES tbl_universidad (id_universidad) MATCH SIMPLE
@@ -162,6 +164,12 @@ CREATE TABLE tbl_homologacion
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT fk_id_materia2 FOREIGN KEY (materia_destino)
       REFERENCES tbl_materias (id_materia) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_id_plan FOREIGN KEY (plan_origen)
+      REFERENCES tbl_plan_programa (id_plan_programa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_id_plan2 FOREIGN KEY (plan_destino)
+      REFERENCES tbl_plan_programa (id_plan_programa) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
