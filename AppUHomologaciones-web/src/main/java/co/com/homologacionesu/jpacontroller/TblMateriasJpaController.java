@@ -210,7 +210,7 @@ public class TblMateriasJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {
@@ -273,7 +273,7 @@ public class TblMateriasJpaController implements Serializable {
             }
             em.remove(tblMaterias);
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException | NonexistentEntityException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {

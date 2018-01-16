@@ -21,7 +21,6 @@ import co.com.homologacionesu.jpacontroller.exceptions.NonexistentEntityExceptio
 import co.com.homologacionesu.jpacontroller.exceptions.RollbackFailureException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -234,7 +233,7 @@ public class TblUniversidadJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {
@@ -271,7 +270,7 @@ public class TblUniversidadJpaController implements Serializable {
             List<TblHomologacion> tblHomologacionListOrphanCheck = tblUniversidad.getTblHomologacionList();
             for (TblHomologacion tblHomologacionListOrphanCheckTblHomologacion : tblHomologacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
+                    illegalOrphanMessages = new ArrayList<>();
                 }
                 illegalOrphanMessages.add("This TblUniversidad (" + tblUniversidad + ") cannot be destroyed since the TblHomologacion " + tblHomologacionListOrphanCheckTblHomologacion + " in its tblHomologacionList field has a non-nullable universidadOrigen field.");
             }
@@ -299,7 +298,7 @@ public class TblUniversidadJpaController implements Serializable {
             }
             em.remove(tblUniversidad);
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException | NonexistentEntityException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {

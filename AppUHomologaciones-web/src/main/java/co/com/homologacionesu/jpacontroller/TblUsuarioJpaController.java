@@ -160,7 +160,7 @@ public class TblUsuarioJpaController implements Serializable {
             }
             em.remove(tblUsuario);
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (NonexistentEntityException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {

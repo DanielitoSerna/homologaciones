@@ -24,7 +24,6 @@ import co.com.homologacionesu.jpacontroller.exceptions.PreexistingEntityExceptio
 import co.com.homologacionesu.jpacontroller.exceptions.RollbackFailureException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -309,7 +308,7 @@ public class TblEstadoJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {
@@ -383,7 +382,7 @@ public class TblEstadoJpaController implements Serializable {
             }
             em.remove(tblEstado);
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (IllegalOrphanException | NonexistentEntityException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {

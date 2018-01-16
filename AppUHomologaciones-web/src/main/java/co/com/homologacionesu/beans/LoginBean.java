@@ -5,6 +5,8 @@ import co.com.homologacionesu.jpacontroller.TblUsuarioJpaController;
 import co.com.homologacionesu.util.JPAFactory;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -108,18 +110,18 @@ public class LoginBean implements Serializable {
         String ctxPath
                 = ((ServletContext) ctx.getContext()).getContextPath();
 
-        try {
             // Usar el contexto de JSF para invalidar la sesión,
             // NO EL DE SERVLETS (nada de HttpServletRequest)
             ((HttpSession) ctx.getSession(false)).invalidate();
 
+        try {
             // Redirección de nuevo con el contexto de JSF,
             // si se usa una HttpServletResponse fallará.
             // Sin embargo, como ya está fuera del ciclo de vida 
             // de JSF se debe usar la ruta completa -_-U
             ctx.redirect(ctxPath + "/index.xhtml");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -148,6 +150,7 @@ public class LoginFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
+     * @return 
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -165,12 +168,15 @@ public class LoginFilter implements Filter {
     /**
      * Destroy method for this filter
      */
+    @Override
     public void destroy() {
     }
 
     /**
      * Init method for this filter
+     * @param filterConfig
      */
+    @Override
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
@@ -198,12 +204,12 @@ public class LoginFilter implements Filter {
         String stackTrace = getStackTrace(t);
 
         if (stackTrace != null && !stackTrace.equals("")) {
+                PrintStream ps = null;
             try {
                 response.setContentType("text/html");
-                PrintStream ps = new PrintStream(response.getOutputStream());
+                ps = new PrintStream(response.getOutputStream());
                 PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
-
                 // PENDING! Localize this for next official release
                 pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
                 pw.print(stackTrace);
@@ -211,30 +217,38 @@ public class LoginFilter implements Filter {
                 pw.close();
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
+                Logger.getLogger(LoginFilter.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                ps.close();
             }
         } else {
+                PrintStream ps = null;
             try {
-                PrintStream ps = new PrintStream(response.getOutputStream());
+                ps = new PrintStream(response.getOutputStream());
                 t.printStackTrace(ps);
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
+                Logger.getLogger(LoginFilter.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                ps.close();
             }
         }
     }
 
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        pw.close();
         try {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            t.printStackTrace(pw);
-            pw.close();
             sw.close();
-            stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            Logger.getLogger(LoginFilter.class.getName()).log(Level.SEVERE, null, ex);
         }
+        stackTrace = sw.getBuffer().toString();
         return stackTrace;
     }
 

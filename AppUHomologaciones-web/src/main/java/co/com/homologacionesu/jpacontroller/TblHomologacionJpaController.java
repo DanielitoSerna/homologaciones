@@ -273,7 +273,7 @@ public class TblHomologacionJpaController implements Serializable {
             }
             em.remove(tblHomologacion);
             em.getTransaction().commit();
-        } catch (Exception ex) {
+        } catch (NonexistentEntityException ex) {
             try {
                 em.getTransaction().rollback();
             } catch (Exception re) {
