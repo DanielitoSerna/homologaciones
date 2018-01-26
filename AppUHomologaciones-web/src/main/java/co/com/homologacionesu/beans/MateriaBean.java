@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblEstado;
@@ -29,8 +24,8 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Realizar las diferentes operaciones para el maestro de materias
+ * @author Daniel Serna
  */
 @ManagedBean
 @ViewScoped
@@ -51,78 +46,154 @@ public class MateriaBean implements Serializable{
     private List<TblMaterias>  tblMateriases;
     private List<TblProgramas> tblProgramases;
 
+    /**
+     * 
+     * @return 
+     */
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
+    /**
+     * 
+     * @param codigoInterno 
+     */
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreMateria() {
         return nombreMateria;
     }
 
+    /**
+     * 
+     * @param nombreMateria 
+     */
     public void setNombreMateria(String nombreMateria) {
         this.nombreMateria = nombreMateria;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getProgramaPertenece() {
         return programaPertenece;
     }
 
+    /**
+     * 
+     * @param programaPertenece 
+     */
     public void setProgramaPertenece(Integer programaPertenece) {
         this.programaPertenece = programaPertenece;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getEstado() {
         return estado;
     }
 
+    /**
+     * 
+     * @param estado 
+     */
     public void setEstado(Long estado) {
         this.estado = estado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarCodigo() {
         return habilitarCodigo;
     }
 
+    /**
+     * 
+     * @param habilitarCodigo 
+     */
     public void setHabilitarCodigo(Boolean habilitarCodigo) {
         this.habilitarCodigo = habilitarCodigo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarBoton() {
         return habilitarBoton;
     }
 
+    /**
+     * 
+     * @param habilitarBoton 
+     */
     public void setHabilitarBoton(Boolean habilitarBoton) {
         this.habilitarBoton = habilitarBoton;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblMaterias getTblMaterias() {
         return tblMaterias;
     }
 
+    /**
+     * 
+     * @param tblMaterias 
+     */
     public void setTblMaterias(TblMaterias tblMaterias) {
         this.tblMaterias = tblMaterias;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblMaterias> getTblMateriases() {
         return tblMateriases;
     }
 
+    /**
+     * 
+     * @param tblMateriases 
+     */
     public void setTblMateriases(List<TblMaterias> tblMateriases) {
         this.tblMateriases = tblMateriases;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblProgramas> getTblProgramases() {
         return tblProgramases;
     }
 
+    /**
+     * 
+     * @param tblProgramases 
+     */
     public void setTblProgramases(List<TblProgramas> tblProgramases) {
         this.tblProgramases = tblProgramases;
     }
     
+    /**
+     * Descripción: Método que permite cargar información previamente cargada, 
+     * una vez ingresada a la pantalla 
+     */
     @PostConstruct
     public void init(){
         tblProgramasJpaController = 
@@ -142,6 +213,10 @@ public class MateriaBean implements Serializable{
         setHabilitarBoton(Boolean.FALSE);
     }
     
+    /**
+     * Descripción: Método que permite guardar información
+     * @param actionEvent 
+     */
     public void guardar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -189,6 +264,10 @@ public class MateriaBean implements Serializable{
         context.addCallbackParam("view", "vw/materias.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite seleccionar un objeto del listado de 
+     * información cargado.
+     */
     public void seleccionarObjeto() {
         nombreMateria = (getTblMaterias().getNombreMateria()!= null
                     ? getTblMaterias().getNombreMateria(): "");
@@ -200,6 +279,11 @@ public class MateriaBean implements Serializable{
         setHabilitarBoton(Boolean.TRUE);
     }
     
+    /**
+     * Descripción: Método que permite modificar información, previamente 
+     * cargado
+     * @param actionEvent 
+     */
     public void modificar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -250,6 +334,11 @@ public class MateriaBean implements Serializable{
         context.addCallbackParam("view", "vw/materias.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite eliminar un registro previamente
+     * seleccionado
+     * @param actionEvent 
+     */
     public void eliminar(ActionEvent actionEvent){
         FacesMessage msg = null;
         RequestContext context = RequestContext.getCurrentInstance();

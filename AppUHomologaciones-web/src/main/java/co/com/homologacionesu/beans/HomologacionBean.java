@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblHomologacion;
@@ -49,7 +44,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * Objetivo: Gestionar homologación referente a la información previamente 
+ * parametrizada y teniendo en cuenta criterios de búsqueda.
  * @author dsernama
  */
 @ManagedBean
@@ -78,126 +74,251 @@ public class HomologacionBean implements Serializable {
     private Boolean habilitarBoton;
     private TblHomologacion tblHomologacion;
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblProgramas> getTblProgramases2() {
         return tblProgramases2;
     }
 
+    /**
+     * 
+     * @param tblProgramases2 
+     */
     public void setTblProgramases2(List<TblProgramas> tblProgramases2) {
         this.tblProgramases2 = tblProgramases2;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblMaterias> getTblMateriases2() {
         return tblMateriases2;
     }
 
+    /**
+     * 
+     * @param tblMateriases2 
+     */
     public void setTblMateriases2(List<TblMaterias> tblMateriases2) {
         this.tblMateriases2 = tblMateriases2;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblHomologacion getTblHomologacion() {
         return tblHomologacion;
     }
 
+    /**
+     * 
+     * @param tblHomologacion 
+     */
     public void setTblHomologacion(TblHomologacion tblHomologacion) {
         this.tblHomologacion = tblHomologacion;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getUniversidadOrigen() {
         return universidadOrigen;
     }
 
+    /**
+     * 
+     * @param universidadOrigen 
+     */
     public void setUniversidadOrigen(Integer universidadOrigen) {
         this.universidadOrigen = universidadOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getUniversidadDestino() {
         return universidadDestino;
     }
 
+    /**
+     * 
+     * @param universidadDestino 
+     */
     public void setUniversidadDestino(Integer universidadDestino) {
         this.universidadDestino = universidadDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getProgramaOrigen() {
         return programaOrigen;
     }
 
+    /**
+     * 
+     * @param programaOrigen 
+     */
     public void setProgramaOrigen(Integer programaOrigen) {
         this.programaOrigen = programaOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getProgramaDestino() {
         return programaDestino;
     }
 
+    /**
+     * 
+     * @param programaDestino 
+     */
     public void setProgramaDestino(Integer programaDestino) {
         this.programaDestino = programaDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getMateriaOrigen() {
         return materiaOrigen;
     }
 
+    /**
+     * 
+     * @param materiaOrigen 
+     */
     public void setMateriaOrigen(Integer materiaOrigen) {
         this.materiaOrigen = materiaOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getMateriaDestino() {
         return materiaDestino;
     }
 
+    /**
+     * 
+     * @param materiaDestino 
+     */
     public void setMateriaDestino(Integer materiaDestino) {
         this.materiaDestino = materiaDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblUniversidad> getTblUniversidads() {
         return tblUniversidads;
     }
 
+    /**
+     * 
+     * @param tblUniversidads 
+     */
     public void setTblUniversidads(List<TblUniversidad> tblUniversidads) {
         this.tblUniversidads = tblUniversidads;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblProgramas> getTblProgramases() {
         return tblProgramases;
     }
 
+    /**
+     * 
+     * @param tblProgramases 
+     */
     public void setTblProgramases(List<TblProgramas> tblProgramases) {
         this.tblProgramases = tblProgramases;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblMaterias> getTblMateriases() {
         return tblMateriases;
     }
 
+    /**
+     * 
+     * @param tblMateriases 
+     */
     public void setTblMateriases(List<TblMaterias> tblMateriases) {
         this.tblMateriases = tblMateriases;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblHomologacion> getTblHomologacions() {
         return tblHomologacions;
     }
 
+    /**
+     * 
+     * @param tblHomologacions 
+     */
     public void setTblHomologacions(List<TblHomologacion> tblHomologacions) {
         this.tblHomologacions = tblHomologacions;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarCodigo() {
         return habilitarCodigo;
     }
 
+    /**
+     * 
+     * @param habilitarCodigo 
+     */
     public void setHabilitarCodigo(Boolean habilitarCodigo) {
         this.habilitarCodigo = habilitarCodigo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarBoton() {
         return habilitarBoton;
     }
 
+    /**
+     * 
+     * @param habilitarBoton 
+     */
     public void setHabilitarBoton(Boolean habilitarBoton) {
         this.habilitarBoton = habilitarBoton;
     }
 
+    /**
+     * Descripción: Método que permite cargar una lista de información 
+     * previamente guardada, dando la posibilidad de que sea editada o eliminada
+     * según el caso
+     */
     @PostConstruct
     public void init() {
         tblUniversidadJpaController
@@ -216,6 +337,9 @@ public class HomologacionBean implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite guardar la información 
+     */
     public void guardar() {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -279,6 +403,10 @@ public class HomologacionBean implements Serializable {
         context.addCallbackParam("view", "vw/homologacion.xhtml");
     }
 
+    /**
+     * Descripción: Método que permite seleccionar un objeto para cargarlo
+     * en los diferentes componentes (texto,listas,radio,check)
+     */
     public void seleccionarObjeto() {
         universidadOrigen = (getTblHomologacion().getUniversidadOrigen().getIdUniversidad() != null
                 ? getTblHomologacion().getUniversidadOrigen().getIdUniversidad() : 0);
@@ -300,6 +428,11 @@ public class HomologacionBean implements Serializable {
         setHabilitarBoton(Boolean.TRUE);
     }
 
+    /**
+     * Descripción: Método que permite modificar un objeto previamente
+     * seleccionado
+     * @param actionEvent 
+     */
     public void modificar(ActionEvent actionEvent) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -367,6 +500,9 @@ public class HomologacionBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    /**
+     * Descripción: Método que permite buscar registros
+     */
     public void filtrarProgramaUniOrigen() {
         RequestContext context = RequestContext.getCurrentInstance();
         tblProgramasJpaController
@@ -380,6 +516,9 @@ public class HomologacionBean implements Serializable {
         context.addCallbackParam("view", "vw/homologacion.xhtml");
     }
 
+    /**
+     * Descripción: Método que permite buscar registros
+     */
     public void filtrarProgramaUniDestino() {
         RequestContext context = RequestContext.getCurrentInstance();
         tblProgramasJpaController
@@ -393,6 +532,9 @@ public class HomologacionBean implements Serializable {
         context.addCallbackParam("view", "vw/homologacion.xhtml");
     }
 
+    /**
+     * Descripción: Método que permite buscar registros
+     */
     public void filtrarMateriaProgOrigen() {
         RequestContext context = RequestContext.getCurrentInstance();
         tblMateriasJpaController
@@ -405,6 +547,9 @@ public class HomologacionBean implements Serializable {
         context.addCallbackParam("view", "vw/homologacion.xhtml");
     }
 
+    /**
+     * Descripción: Método que permite buscar registros
+     */
     public void filtrarMateriaProgDestino() {
         RequestContext context = RequestContext.getCurrentInstance();
         tblMateriasJpaController
@@ -417,6 +562,11 @@ public class HomologacionBean implements Serializable {
         context.addCallbackParam("view", "vw/homologacion.xhtml");
     }
 
+    /**
+     * Descripción: 
+     * @param i
+     * @return 
+     */
     public List<TblHomologacion> getTblHomologacions(int i) {
         if (i == 1) {
             buscarHomologaciones();
@@ -424,12 +574,19 @@ public class HomologacionBean implements Serializable {
         return tblHomologacions;
     }
 
+    /**
+     * Descripción:. 
+     */
     public void buscar() {
         RequestContext context = RequestContext.getCurrentInstance();
         setHabilitarBoton(Boolean.TRUE);
         context.addCallbackParam("view", "vw/Busqueda.xhtml");
     }
 
+    /**
+     * Descripción: Método que permite buscar una homologación con los 
+     * parámetros anteriormente seleccionados
+     */
     public void buscarHomologaciones() {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -477,45 +634,37 @@ public class HomologacionBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("view", "vw/Busqueda.xhtml");
     }
-    
-    public void generarReporte(ActionEvent actionEvent){
+
+    /**
+     * Descripción: Método que permite generar archivo excel como artefacto 
+     * para tener en cuenta en el proceso de homologación
+     * @param actionEvent 
+     */
+    public void generarReporte(ActionEvent actionEvent) {
         setHabilitarBoton(Boolean.TRUE);
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Reporte");
         XSSFCellStyle style = workbook.createCellStyle();
-        
-        XSSFCellStyle style1;
-        XSSFFont headerFont;
-//        headerFont = JSFUtil.createFont(HSSFColor.WHITE.index,
-//                (short) 12, true, workbook);
-//        style1 = JSFUtil.createStyle(headerFont, XSSFCellStyle.ALIGN_CENTER,
-//                HSSFColor.RED.index, true, HSSFColor.WHITE.index, workbook);
-//        
+
         Row encabezado = sheet.createRow(0);
         Cell celda1 = encabezado.createCell(0);
         celda1.setCellValue("Universidad Origen");
-//        celda1.setCellStyle(style1);
         Cell celda2 = encabezado.createCell(1);
         celda2.setCellValue("Universidad Destino");
-//        celda2.setCellStyle(style1);
         Cell celda3 = encabezado.createCell(2);
         celda3.setCellValue("Programa Origen");
-//        celda3.setCellStyle(style1);        
         Cell celda4 = encabezado.createCell(3);
         celda4.setCellValue("Programa Destino");
-//        celda4.setCellStyle(style1);        
         Cell celda5 = encabezado.createCell(4);
         celda5.setCellValue("Materia Origen");
-//        celda5.setCellStyle(style1); 
         Cell celda6 = encabezado.createCell(5);
         celda6.setCellValue("Materia Destino");
-//        celda6.setCellStyle(style1); 
-        
+
         for (int i = 0; i < tblHomologacions.size(); i++) {
             Row fila = sheet.createRow(i + 1);
-            
+
             TblHomologacion tblHomologacion2 = tblHomologacions.get(i);
-            
+
             Cell dato1 = fila.createCell(0);
             dato1.setCellStyle(style);
             dato1.setCellValue(tblHomologacion2.getUniversidadOrigen().getNombreUniversidad());
@@ -535,11 +684,11 @@ public class HomologacionBean implements Serializable {
             Cell dato5 = fila.createCell(4);
             dato5.setCellStyle(style);
             dato5.setCellValue(tblHomologacion2.getMateriaOrigen().getNombreMateria());
-            
+
             Cell dato6 = fila.createCell(5);
             dato6.setCellStyle(style);
             dato6.setCellValue(tblHomologacion2.getMateriaDestino().getNombreMateria());
-            
+
             java.util.Date fecha = JSFUtil.sumarRestarDiasFecha(new Date(), 0);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yy/MM/dd");
             String s = dateFormat.format(fecha);
@@ -558,28 +707,27 @@ public class HomologacionBean implements Serializable {
             } catch (IOException ex) {
                 Logger.getLogger(HomologacionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
-    
+
     public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;
         HSSFSheet sheet = wb.getSheetAt(0);
         HSSFRow header = sheet.getRow(0);
-         
+
         HSSFCellStyle style1;
         HSSFFont headerFont;
         headerFont = JSFUtil.createFont(HSSFColor.WHITE.index,
                 (short) 12, true, wb);
         style1 = JSFUtil.createStyle(headerFont, HSSFCellStyle.ALIGN_CENTER,
                 HSSFColor.RED.index, true, HSSFColor.WHITE.index, wb);
-         
-        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
+
+        for (int i = 0; i < header.getPhysicalNumberOfCells(); i++) {
             HSSFCell cell = header.getCell(i);
-             
+
             cell.setCellStyle(style1);
         }
     }
-    
-    
+
 }

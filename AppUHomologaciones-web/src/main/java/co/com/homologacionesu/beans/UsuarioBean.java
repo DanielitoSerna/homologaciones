@@ -22,7 +22,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * Objetivo: Administrar usuarios
  * @author dsernama
  */
 @ManagedBean
@@ -46,90 +46,178 @@ public class UsuarioBean implements Serializable{
     private List<TblRoles> roleses;
     private TblUsuario tblUsuario;
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
+    /**
+     * 
+     * @param nombreUsuario 
+     */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * 
+     * @param clave 
+     */
     public void setClave(String clave) {
         this.clave = clave;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getCorreo() {
         return correo;
     }
 
+    /**
+     * 
+     * @param correo 
+     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getEstado() {
         return estado;
     }
 
+    /**
+     * 
+     * @param estado 
+     */
     public void setEstado(Long estado) {
         this.estado = estado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarCodigo() {
         return habilitarCodigo;
     }
 
+    /**
+     * 
+     * @param habilitarCodigo 
+     */
     public void setHabilitarCodigo(Boolean habilitarCodigo) {
         this.habilitarCodigo = habilitarCodigo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarBoton() {
         return habilitarBoton;
     }
 
+    /**
+     * 
+     * @param habilitarBoton 
+     */
     public void setHabilitarBoton(Boolean habilitarBoton) {
         this.habilitarBoton = habilitarBoton;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getRol() {
         return rol;
     }
 
+    /**
+     * 
+     * @param rol 
+     */
     public void setRol(Long rol) {
         this.rol = rol;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getClaveRepetir() {
         return claveRepetir;
     }
 
+    /**
+     * 
+     * @param claveRepetir 
+     */
     public void setClaveRepetir(String claveRepetir) {
         this.claveRepetir = claveRepetir;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUsuario getTblUsuario() {
         return tblUsuario;
     }
 
+    /**
+     * 
+     * @param tblUsuario 
+     */
     public void setTblUsuario(TblUsuario tblUsuario) {
         this.tblUsuario = tblUsuario;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public List<TblUsuario> getUsuarios() {
         return usuarios;
     }
 
+    /**
+     * 
+     * @param usuarios 
+     */
     public void setUsuarios(List<TblUsuario> usuarios) {
         this.usuarios = usuarios;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblRoles> getRoleses() {
         return roleses;
     }
 
+    /**
+     * 
+     * @param roleses 
+     */
     public void setRoleses(List<TblRoles> roleses) {
         this.roleses = roleses;
     }
@@ -156,6 +244,10 @@ public class UsuarioBean implements Serializable{
         setHabilitarBoton(Boolean.FALSE);
     }
     
+    /**
+     * Descripción: Método que permite guardar información
+     * @param event 
+     */
     public void guardar(ActionEvent event){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -220,6 +312,9 @@ public class UsuarioBean implements Serializable{
         context.addCallbackParam("view", "vw/usuarios.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite seleccionar un registro
+     */
     public void seleccionarObjeto() {
         nombreUsuario = (getTblUsuario().getUsuario()!= null
                     ? getTblUsuario().getUsuario() : "");
@@ -235,6 +330,10 @@ public class UsuarioBean implements Serializable{
         setHabilitarBoton(Boolean.TRUE);
     }
     
+    /**
+     * Descripción: Método que permite modificar información
+     * @param actionEvent 
+     */
     public void modificar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -300,6 +399,10 @@ public class UsuarioBean implements Serializable{
         context.addCallbackParam("view", "vw/usuarios.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite eliminar información
+     * @param actionEvent 
+     */
     public void eliminar(ActionEvent actionEvent){
         FacesMessage msg = null;
         RequestContext context = RequestContext.getCurrentInstance();

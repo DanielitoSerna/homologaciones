@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblEstado;
@@ -26,8 +21,8 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar los roles dependientes del aplicativo
+ * @author Daniel Serna
  */
 @ManagedBean
 @ViewScoped
@@ -307,7 +302,6 @@ public class RolesBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("view", "vw/roles.xhtml");
-//        JSFUtil.redirectPage("/vw/roles.xhtml");
     }
     
     public void eliminar(ActionEvent event){

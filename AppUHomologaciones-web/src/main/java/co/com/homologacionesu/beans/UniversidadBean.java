@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblEstado;
@@ -28,7 +23,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * Objetivo: Administrar la información de universidades
  * @author dsernama
  */
 @ManagedBean
@@ -48,86 +43,170 @@ public class UniversidadBean implements Serializable{
     private Boolean habilitarCodigo;
     private Boolean habilitarBoton;
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreUniversidad() {
         return nombreUniversidad;
     }
 
+    /**
+     * 
+     * @param nombreUniversidad 
+     */
     public void setNombreUniversidad(String nombreUniversidad) {
         this.nombreUniversidad = nombreUniversidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNit() {
         return nit;
     }
 
+    /**
+     * 
+     * @param nit 
+     */
     public void setNit(String nit) {
         this.nit = nit;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getEstado() {
         return estado;
     }
 
+    /**
+     * 
+     * @param estado 
+     */
     public void setEstado(Long estado) {
         this.estado = estado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getAcreditada() {
         return acreditada;
     }
 
+    /**
+     * 
+     * @param acreditada 
+     */
     public void setAcreditada(Boolean acreditada) {
         this.acreditada = acreditada;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstadoJpaController getTblEstadoJpaController() {
         return tblEstadoJpaController;
     }
 
+    /**
+     * 
+     * @param tblEstadoJpaController 
+     */
     public void setTblEstadoJpaController(TblEstadoJpaController tblEstadoJpaController) {
         this.tblEstadoJpaController = tblEstadoJpaController;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUniversidadJpaController getTblUniversidadJpaController() {
         return tblUniversidadJpaController;
     }
 
+    /**
+     * 
+     * @param tblUniversidadJpaController 
+     */
     public void setTblUniversidadJpaController(TblUniversidadJpaController tblUniversidadJpaController) {
         this.tblUniversidadJpaController = tblUniversidadJpaController;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblUniversidad> getTblUniversidads() {
         return tblUniversidads;
     }
 
+    /**
+     * 
+     * @param tblUniversidads 
+     */
     public void setTblUniversidads(List<TblUniversidad> tblUniversidads) {
         this.tblUniversidads = tblUniversidads;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUniversidad getTblUniversidad() {
         return tblUniversidad;
     }
 
+    /**
+     * 
+     * @param tblUniversidad 
+     */
     public void setTblUniversidad(TblUniversidad tblUniversidad) {
         this.tblUniversidad = tblUniversidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarCodigo() {
         return habilitarCodigo;
     }
 
+    /**
+     * 
+     * @param habilitarCodigo 
+     */
     public void setHabilitarCodigo(Boolean habilitarCodigo) {
         this.habilitarCodigo = habilitarCodigo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarBoton() {
         return habilitarBoton;
     }
 
+    /**
+     * 
+     * @param habilitarBoton 
+     */
     public void setHabilitarBoton(Boolean habilitarBoton) {
         this.habilitarBoton = habilitarBoton;
     }
     
+    /**
+     * Descripción: Método que permite cargar información al momento de ingresar
+     * a la pantalla
+     */
     @PostConstruct
     public void init(){
         tblUniversidadJpaController = new TblUniversidadJpaController(JPAFactory.getFACTORY());
@@ -144,6 +223,10 @@ public class UniversidadBean implements Serializable{
         setHabilitarBoton(Boolean.FALSE);
     }
     
+    /**
+     * Descripción: Método que permite guardar la información
+     * @param actionEvent 
+     */
     public void guardar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -192,6 +275,9 @@ public class UniversidadBean implements Serializable{
         context.addCallbackParam("view", "vw/universidades.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite seleccionar un registro
+     */
     public void seleccionarObjeto() {
         nombreUniversidad = (getTblUniversidad().getNombreUniversidad()!= null
                     ? getTblUniversidad().getNombreUniversidad() : "");
@@ -210,6 +296,11 @@ public class UniversidadBean implements Serializable{
         setHabilitarBoton(Boolean.TRUE);
     }
     
+    /**
+     * Descripción: Método que permite modificar información a partir de un
+     * registro seleccionado
+     * @param actionEvent 
+     */
     public void modificar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -263,6 +354,11 @@ public class UniversidadBean implements Serializable{
         context.addCallbackParam("view", "vw/universidades.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite eliminar información, partiendo de un
+     * registro seleccionado
+     * @param actionEvent 
+     */
     public void eliminar(ActionEvent actionEvent){
         FacesMessage msg = null;
         RequestContext context = RequestContext.getCurrentInstance();

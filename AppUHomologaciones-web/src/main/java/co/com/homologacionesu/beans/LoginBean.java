@@ -28,34 +28,68 @@ public class LoginBean implements Serializable {
     private TblUsuarioJpaController tblUsuarioJpaController;
     private boolean todo = false;
 
+    /**
+     * 
+     * @return 
+     */
     public boolean isTodo() {
         return todo;
     }
 
+    /**
+     * 
+     * @param todo 
+     */
     public void setTodo(boolean todo) {
         this.todo = todo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public boolean estaLogeado() {
         return logeado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * 
+     * @param nombre 
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * 
+     * @param clave 
+     */
     public void setClave(String clave) {
         this.clave = clave;
     }
 
+    /**
+     * Descripción: Método que permite ingresar a la aplicación con usuario y 
+     * contraseña
+     * @param actionEvent
+     * @throws IOException 
+     */
     public void login(ActionEvent actionEvent) throws IOException {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -97,6 +131,10 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite cerrar sesión
+     * @param actionEvent 
+     */
     public void logout(ActionEvent actionEvent) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -104,6 +142,10 @@ public class LoginBean implements Serializable {
         logeado = false;
     }
     
+    /**
+     * Descripción: Método que permite cerrar sesión
+     * @param actionEvent 
+     */
     public void logoutPrueba(ActionEvent acitonEvent) {
         ExternalContext ctx
                 = FacesContext.getCurrentInstance().getExternalContext();

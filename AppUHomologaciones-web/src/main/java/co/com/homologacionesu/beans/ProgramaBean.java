@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblEstado;
@@ -29,7 +24,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * Objetivo: Administrar programas
  * @author dsernama
  */
 @ManagedBean
@@ -51,78 +46,154 @@ public class ProgramaBean implements Serializable{
     private Boolean habilitarBoton;
     private List<TblUniversidad> tblUniversidads;
     
+    /**
+     * 
+     * @return 
+     */
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
+    /**
+     * 
+     * @param codigoInterno 
+     */
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombrePrograma() {
         return nombrePrograma;
     }
 
+    /**
+     * 
+     * @param nombrePrograma 
+     */
     public void setNombrePrograma(String nombrePrograma) {
         this.nombrePrograma = nombrePrograma;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getEstado() {
         return estado;
     }
 
+    /**
+     * 
+     * @param estado 
+     */
     public void setEstado(Long estado) {
         this.estado = estado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getUniversidad() {
         return universidad;
     }
 
+    /**
+     * 
+     * @param universidad 
+     */
     public void setUniversidad(Integer universidad) {
         this.universidad = universidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblProgramas getTblProgramas() {
         return tblProgramas;
     }
 
+    /**
+     * 
+     * @param tblProgramas 
+     */
     public void setTblProgramas(TblProgramas tblProgramas) {
         this.tblProgramas = tblProgramas;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblProgramas> getTblProgramases() {
         return tblProgramases;
     }
 
+    /**
+     * 
+     * @param tblProgramases 
+     */
     public void setTblProgramases(List<TblProgramas> tblProgramases) {
         this.tblProgramases = tblProgramases;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarCodigo() {
         return habilitarCodigo;
     }
 
+    /**
+     * 
+     * @param habilitarCodigo 
+     */
     public void setHabilitarCodigo(Boolean habilitarCodigo) {
         this.habilitarCodigo = habilitarCodigo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Boolean getHabilitarBoton() {
         return habilitarBoton;
     }
 
+    /**
+     * 
+     * @param habilitarBoton 
+     */
     public void setHabilitarBoton(Boolean habilitarBoton) {
         this.habilitarBoton = habilitarBoton;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<TblUniversidad> getTblUniversidads() {
         return tblUniversidads;
     }
 
+    /**
+     * 
+     * @param tblUniversidads 
+     */
     public void setTblUniversidads(List<TblUniversidad> tblUniversidads) {
         this.tblUniversidads = tblUniversidads;
     }
     
+    /**
+     * Descripción: Método que carga la información al momento de ingresar a la
+     * pantalla 
+     */
     @PostConstruct
     public void init(){
         tblUniversidadJpaController = 
@@ -143,6 +214,9 @@ public class ProgramaBean implements Serializable{
         setHabilitarBoton(Boolean.FALSE);
     }
     
+    /**
+     * Descripción: Método que permite guardar la información
+     */
     public void guardar(){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -195,6 +269,9 @@ public class ProgramaBean implements Serializable{
         context.addCallbackParam("view", "vw/programas.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite seleccionar un registro
+     */
     public void seleccionarObjeto() {
         nombrePrograma = (getTblProgramas().getNombrePrograma()!= null
                     ? getTblProgramas().getNombrePrograma() : "");
@@ -206,6 +283,11 @@ public class ProgramaBean implements Serializable{
         setHabilitarBoton(Boolean.TRUE);
     }
     
+    /**
+     * Descripción: Método que permite modificar un registro anteriormente
+     * seleccionado
+     * @param actionEvent 
+     */
     public void modificar(ActionEvent actionEvent){
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -263,6 +345,11 @@ public class ProgramaBean implements Serializable{
         context.addCallbackParam("view", "vw/programas.xhtml");
     }
     
+    /**
+     * Descripción: Método que permite eliminar un registro previamente 
+     * seleccionado
+     * @param actionEvent 
+     */
     public void eliminar(ActionEvent actionEvent){
         FacesMessage msg = null;
         RequestContext context = RequestContext.getCurrentInstance();
