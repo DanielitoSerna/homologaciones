@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -24,7 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Objetivo: Administrar roles, para acceder a las diferentes opciones del 
+ * aplicativo
  * @author dsernama
  */
 @Entity
@@ -32,9 +28,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblRoles.findAll", query = "SELECT t FROM TblRoles t"),
-    @NamedQuery(name = "TblRoles.findByCodRol", query = "SELECT t FROM TblRoles t WHERE t.codRol = :codRol"),
-    @NamedQuery(name = "TblRoles.findByNombreRol", query = "SELECT t FROM TblRoles t WHERE t.nombreRol = :nombreRol"),
-    @NamedQuery(name = "TblRoles.findByDescripcion", query = "SELECT t FROM TblRoles t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TblRoles.findByCodRol", 
+            query = "SELECT t FROM TblRoles t WHERE t.codRol = :codRol"),
+    @NamedQuery(name = "TblRoles.findByNombreRol", 
+            query = "SELECT t FROM TblRoles t WHERE t.nombreRol = :nombreRol"),
+    @NamedQuery(name = "TblRoles.findByDescripcion", 
+            query = "SELECT t FROM TblRoles t WHERE t.descripcion = :descripcion")})
 public class TblRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,59 +56,115 @@ public class TblRoles implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codRol")
     private List<TblUsuario> tblUsuarioList;
 
+    /**
+     * 
+     */
     public TblRoles() {
     }
 
+    /**
+     * 
+     * @param codRol 
+     */
     public TblRoles(Long codRol) {
         this.codRol = codRol;
     }
 
+    /**
+     * 
+     * @param codRol
+     * @param nombreRol 
+     */
     public TblRoles(Long codRol, String nombreRol) {
         this.codRol = codRol;
         this.nombreRol = nombreRol;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Long getCodRol() {
         return codRol;
     }
 
+    /**
+     * 
+     * @param codRol 
+     */
     public void setCodRol(Long codRol) {
         this.codRol = codRol;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreRol() {
         return nombreRol;
     }
 
+    /**
+     * 
+     * @param nombreRol 
+     */
     public void setNombreRol(String nombreRol) {
         this.nombreRol = nombreRol;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * 
+     * @param descripcion 
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstado getIdEstado() {
         return idEstado;
     }
 
+    /**
+     * 
+     * @param idEstado 
+     */
     public void setIdEstado(TblEstado idEstado) {
         this.idEstado = idEstado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblUsuario> getTblUsuarioList() {
         return tblUsuarioList;
     }
 
+    /**
+     * 
+     * @param tblUsuarioList 
+     */
     public void setTblUsuarioList(List<TblUsuario> tblUsuarioList) {
         this.tblUsuarioList = tblUsuarioList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -117,6 +172,11 @@ public class TblRoles implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -130,6 +190,10 @@ public class TblRoles implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblRoles[ codRol=" + codRol + " ]";

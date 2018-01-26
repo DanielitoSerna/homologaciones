@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -26,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Objetivo: Administrar universidad
  * @author dsernama
  */
 @Entity
@@ -34,10 +29,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblUniversidad.findAll", query = "SELECT t FROM TblUniversidad t"),
-    @NamedQuery(name = "TblUniversidad.findByIdUniversidad", query = "SELECT t FROM TblUniversidad t WHERE t.idUniversidad = :idUniversidad"),
-    @NamedQuery(name = "TblUniversidad.findByNombreUniversidad", query = "SELECT t FROM TblUniversidad t WHERE t.nombreUniversidad = :nombreUniversidad"),
-    @NamedQuery(name = "TblUniversidad.findByAcreditada", query = "SELECT t FROM TblUniversidad t WHERE t.acreditada = :acreditada"),
-    @NamedQuery(name = "TblUniversidad.findByNit", query = "SELECT t FROM TblUniversidad t WHERE t.nit = :nit")})
+    @NamedQuery(name = "TblUniversidad.findByIdUniversidad", 
+            query = "SELECT t FROM TblUniversidad t WHERE t.idUniversidad = :idUniversidad"),
+    @NamedQuery(name = "TblUniversidad.findByNombreUniversidad", 
+            query = "SELECT t FROM TblUniversidad t WHERE t.nombreUniversidad = :nombreUniversidad"),
+    @NamedQuery(name = "TblUniversidad.findByAcreditada", 
+            query = "SELECT t FROM TblUniversidad t WHERE t.acreditada = :acreditada"),
+    @NamedQuery(name = "TblUniversidad.findByNit", 
+            query = "SELECT t FROM TblUniversidad t WHERE t.nit = :nit")})
 public class TblUniversidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,87 +70,170 @@ public class TblUniversidad implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUniversidad")
     private List<TblProgramas> tblProgramasList;
 
+    /**
+     * 
+     */
     public TblUniversidad() {
     }
 
+    /**
+     * 
+     * @param idUniversidad 
+     */
     public TblUniversidad(Integer idUniversidad) {
         this.idUniversidad = idUniversidad;
     }
 
-    public TblUniversidad(Integer idUniversidad, String nombreUniversidad, String acreditada, String nit) {
+    /**
+     * 
+     * @param idUniversidad
+     * @param nombreUniversidad
+     * @param acreditada
+     * @param nit 
+     */
+    public TblUniversidad(Integer idUniversidad, String nombreUniversidad, 
+            String acreditada, String nit) {
         this.idUniversidad = idUniversidad;
         this.nombreUniversidad = nombreUniversidad;
         this.acreditada = acreditada;
         this.nit = nit;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getIdUniversidad() {
         return idUniversidad;
     }
 
+    /**
+     * 
+     * @param idUniversidad 
+     */
     public void setIdUniversidad(Integer idUniversidad) {
         this.idUniversidad = idUniversidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreUniversidad() {
         return nombreUniversidad;
     }
 
+    /**
+     * 
+     * @param nombreUniversidad 
+     */
     public void setNombreUniversidad(String nombreUniversidad) {
         this.nombreUniversidad = nombreUniversidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getAcreditada() {
         return acreditada;
     }
 
+    /**
+     * 
+     * @param acreditada 
+     */
     public void setAcreditada(String acreditada) {
         this.acreditada = acreditada;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNit() {
         return nit;
     }
 
+    /**
+     * 
+     * @param nit 
+     */
     public void setNit(String nit) {
         this.nit = nit;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList() {
         return tblHomologacionList;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList 
+     */
     public void setTblHomologacionList(List<TblHomologacion> tblHomologacionList) {
         this.tblHomologacionList = tblHomologacionList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList1() {
         return tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList1 
+     */
     public void setTblHomologacionList1(List<TblHomologacion> tblHomologacionList1) {
         this.tblHomologacionList1 = tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstado getIdEstado() {
         return idEstado;
     }
 
+    /**
+     * 
+     * @param idEstado 
+     */
     public void setIdEstado(TblEstado idEstado) {
         this.idEstado = idEstado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblProgramas> getTblProgramasList() {
         return tblProgramasList;
     }
 
+    /**
+     * 
+     * @param tblProgramasList 
+     */
     public void setTblProgramasList(List<TblProgramas> tblProgramasList) {
         this.tblProgramasList = tblProgramasList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -159,6 +241,11 @@ public class TblUniversidad implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -172,6 +259,10 @@ public class TblUniversidad implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblUniversidad[ idUniversidad=" + idUniversidad + " ]";

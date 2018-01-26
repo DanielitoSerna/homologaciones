@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -26,8 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar programas
+ * @author Daniel Serna
  */
 @Entity
 @Table(name = "tbl_programas")
@@ -44,6 +39,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblProgramas.findByUniversidad",
             query = "SELECT t FROM TblProgramas t WHERE t.idUniversidad = :idUniversidad")})
 public class TblProgramas implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "facultad_pertenece")
+    private String facultadPertenece;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
+    private List<TblPlanPrograma> tblPlanProgramaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,86 +77,167 @@ public class TblProgramas implements Serializable {
     @ManyToOne(optional = false)
     private TblUniversidad idUniversidad;
 
+    /**
+     * 
+     */
     public TblProgramas() {
     }
 
+    /**
+     * 
+     * @param idPrograma 
+     */
     public TblProgramas(Integer idPrograma) {
         this.idPrograma = idPrograma;
     }
 
+    /**
+     * 
+     * @param idPrograma
+     * @param codigoInterno
+     * @param nombrePrograma 
+     */
     public TblProgramas(Integer idPrograma, String codigoInterno, String nombrePrograma) {
         this.idPrograma = idPrograma;
         this.codigoInterno = codigoInterno;
         this.nombrePrograma = nombrePrograma;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getIdPrograma() {
         return idPrograma;
     }
 
+    /**
+     * 
+     * @param idPrograma 
+     */
     public void setIdPrograma(Integer idPrograma) {
         this.idPrograma = idPrograma;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
+    /**
+     * 
+     * @param codigoInterno 
+     */
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombrePrograma() {
         return nombrePrograma;
     }
 
+    /**
+     * 
+     * @param nombrePrograma 
+     */
     public void setNombrePrograma(String nombrePrograma) {
         this.nombrePrograma = nombrePrograma;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblMaterias> getTblMateriasList() {
         return tblMateriasList;
     }
 
+    /**
+     * 
+     * @param tblMateriasList 
+     */
     public void setTblMateriasList(List<TblMaterias> tblMateriasList) {
         this.tblMateriasList = tblMateriasList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList() {
         return tblHomologacionList;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList 
+     */
     public void setTblHomologacionList(List<TblHomologacion> tblHomologacionList) {
         this.tblHomologacionList = tblHomologacionList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList1() {
         return tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList1 
+     */
     public void setTblHomologacionList1(List<TblHomologacion> tblHomologacionList1) {
         this.tblHomologacionList1 = tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstado getIdEstado() {
         return idEstado;
     }
 
+    /**
+     * 
+     * @param idEstado 
+     */
     public void setIdEstado(TblEstado idEstado) {
         this.idEstado = idEstado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUniversidad getIdUniversidad() {
         return idUniversidad;
     }
 
+    /**
+     * 
+     * @param idUniversidad 
+     */
     public void setIdUniversidad(TblUniversidad idUniversidad) {
         this.idUniversidad = idUniversidad;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -161,6 +245,11 @@ public class TblProgramas implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -174,9 +263,46 @@ public class TblProgramas implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblProgramas[ idPrograma=" + idPrograma + " ]";
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public String getFacultadPertenece() {
+        return facultadPertenece;
+    }
+
+    /**
+     * 
+     * @param facultadPertenece 
+     */
+    public void setFacultadPertenece(String facultadPertenece) {
+        this.facultadPertenece = facultadPertenece;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    @XmlTransient
+    public List<TblPlanPrograma> getTblPlanProgramaList() {
+        return tblPlanProgramaList;
+    }
+
+    /**
+     * 
+     * @param tblPlanProgramaList 
+     */
+    public void setTblPlanProgramaList(List<TblPlanPrograma> tblPlanProgramaList) {
+        this.tblPlanProgramaList = tblPlanProgramaList;
     }
     
 }

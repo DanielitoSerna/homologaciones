@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -26,8 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar materias
+ * @author Daniel Serna
  */
 @Entity
 @Table(name = "tbl_materias")
@@ -71,77 +66,150 @@ public class TblMaterias implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaDestino")
     private List<TblHomologacion> tblHomologacionList1;
 
+    /**
+     * 
+     */
     public TblMaterias() {
     }
 
+    /**
+     * 
+     * @param idMateria 
+     */
     public TblMaterias(Integer idMateria) {
         this.idMateria = idMateria;
     }
 
+    /**
+     * 
+     * @param idMateria
+     * @param codigoInterno
+     * @param nombreMateria 
+     */
     public TblMaterias(Integer idMateria, String codigoInterno, String nombreMateria) {
         this.idMateria = idMateria;
         this.codigoInterno = codigoInterno;
         this.nombreMateria = nombreMateria;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getIdMateria() {
         return idMateria;
     }
 
+    /**
+     * 
+     * @param idMateria 
+     */
     public void setIdMateria(Integer idMateria) {
         this.idMateria = idMateria;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
+    /**
+     * 
+     * @param codigoInterno 
+     */
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreMateria() {
         return nombreMateria;
     }
 
+    /**
+     * 
+     * @param nombreMateria 
+     */
     public void setNombreMateria(String nombreMateria) {
         this.nombreMateria = nombreMateria;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstado getIdEstado() {
         return idEstado;
     }
 
+    /**
+     * 
+     * @param idEstado 
+     */
     public void setIdEstado(TblEstado idEstado) {
         this.idEstado = idEstado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblProgramas getIdPrograma() {
         return idPrograma;
     }
 
+    /**
+     * 
+     * @param idPrograma 
+     */
     public void setIdPrograma(TblProgramas idPrograma) {
         this.idPrograma = idPrograma;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList() {
         return tblHomologacionList;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList 
+     */
     public void setTblHomologacionList(List<TblHomologacion> tblHomologacionList) {
         this.tblHomologacionList = tblHomologacionList;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @XmlTransient
     public List<TblHomologacion> getTblHomologacionList1() {
         return tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @param tblHomologacionList1 
+     */
     public void setTblHomologacionList1(List<TblHomologacion> tblHomologacionList1) {
         this.tblHomologacionList1 = tblHomologacionList1;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,6 +217,11 @@ public class TblMaterias implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -162,6 +235,10 @@ public class TblMaterias implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblMaterias[ idMateria=" + idMateria + " ]";

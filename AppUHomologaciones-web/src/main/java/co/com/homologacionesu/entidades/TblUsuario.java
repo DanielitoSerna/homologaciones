@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -20,8 +15,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar usuarios
+ * @author Daniel Serna
  */
 @Entity
 @Table(name = "tbl_usuario")
@@ -64,59 +59,116 @@ public class TblUsuario implements Serializable {
     @ManyToOne(optional = false)
     private TblRoles codRol;
 
+    /**
+     * 
+     */
     public TblUsuario() {
     }
 
+    /**
+     * 
+     * @param usuario 
+     */
     public TblUsuario(String usuario) {
         this.usuario = usuario;
     }
 
+    /**
+     * 
+     * @param usuario
+     * @param contrasena
+     * @param correo 
+     */
     public TblUsuario(String usuario, String contrasena, String correo) {
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.correo = correo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getUsuario() {
         return usuario;
     }
 
+    /**
+     * 
+     * @param usuario 
+     */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getContrasena() {
         return contrasena;
     }
 
+    /**
+     * 
+     * @param contrasena 
+     */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getCorreo() {
         return correo;
     }
 
+    /**
+     * 
+     * @param correo 
+     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblEstado getIdEstado() {
         return idEstado;
     }
 
+    /**
+     * 
+     * @param idEstado 
+     */
     public void setIdEstado(TblEstado idEstado) {
         this.idEstado = idEstado;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblRoles getCodRol() {
         return codRol;
     }
 
+    /**
+     * 
+     * @param codRol 
+     */
     public void setCodRol(TblRoles codRol) {
         this.codRol = codRol;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -124,6 +176,11 @@ public class TblUsuario implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -137,6 +194,10 @@ public class TblUsuario implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblUsuario[ usuario=" + usuario + " ]";

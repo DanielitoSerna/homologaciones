@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.entidades;
 
 import java.io.Serializable;
@@ -20,7 +15,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Objetivo: Generar homologación 
  * @author dsernama
  */
 @Entity
@@ -63,69 +58,136 @@ public class TblHomologacion implements Serializable {
     @ManyToOne(optional = false)
     private TblUniversidad universidadDestino;
 
+    /**
+     * 
+     */
     public TblHomologacion() {
     }
 
+    /**
+     * 
+     * @param idHomologa 
+     */
     public TblHomologacion(Integer idHomologa) {
         this.idHomologa = idHomologa;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getIdHomologa() {
         return idHomologa;
     }
 
+    /**
+     * 
+     * @param idHomologa 
+     */
     public void setIdHomologa(Integer idHomologa) {
         this.idHomologa = idHomologa;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblMaterias getMateriaOrigen() {
         return materiaOrigen;
     }
 
+    /**
+     * 
+     * @param materiaOrigen 
+     */
     public void setMateriaOrigen(TblMaterias materiaOrigen) {
         this.materiaOrigen = materiaOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblMaterias getMateriaDestino() {
         return materiaDestino;
     }
 
+    /**
+     * 
+     * @param materiaDestino 
+     */
     public void setMateriaDestino(TblMaterias materiaDestino) {
         this.materiaDestino = materiaDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblProgramas getProgramaDestino() {
         return programaDestino;
     }
 
+    /**
+     * 
+     * @param programaDestino 
+     */
     public void setProgramaDestino(TblProgramas programaDestino) {
         this.programaDestino = programaDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblProgramas getProgramaOrigen() {
         return programaOrigen;
     }
 
+    /**
+     * 
+     * @param programaOrigen 
+     */
     public void setProgramaOrigen(TblProgramas programaOrigen) {
         this.programaOrigen = programaOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUniversidad getUniversidadOrigen() {
         return universidadOrigen;
     }
 
+    /**
+     * 
+     * @param universidadOrigen 
+     */
     public void setUniversidadOrigen(TblUniversidad universidadOrigen) {
         this.universidadOrigen = universidadOrigen;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public TblUniversidad getUniversidadDestino() {
         return universidadDestino;
     }
 
+    /**
+     * 
+     * @param universidadDestino 
+     */
     public void setUniversidadDestino(TblUniversidad universidadDestino) {
         this.universidadDestino = universidadDestino;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,6 +195,11 @@ public class TblHomologacion implements Serializable {
         return hash;
     }
 
+    /**
+     * 
+     * @param object
+     * @return 
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -146,6 +213,10 @@ public class TblHomologacion implements Serializable {
         return true;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblHomologacion[ idHomologa=" + idHomologa + " ]";
