@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import co.com.homologacionesu.entidades.TblHomologacion;
@@ -22,23 +17,39 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
- *
+ * Objetivo: Administrar operaciones para la tabla de homologaciones
  * @author dsernama
  */
 public class TblHomologacionJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblHomologacionJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(TblHomologacion tblHomologacion) throws PreexistingEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite crear un registro en base de datos
+     * @param tblHomologacion
+     * @throws PreexistingEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void create(TblHomologacion tblHomologacion) 
+            throws PreexistingEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -116,7 +127,16 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
-    public void edit(TblHomologacion tblHomologacion) throws NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite modificar información respecto a lo 
+     * guardado
+     * @param tblHomologacion
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void edit(TblHomologacion tblHomologacion) 
+            throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -229,7 +249,15 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite eliminar registros previamente guardados
+     * @param id
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void destroy(Long id) throws NonexistentEntityException, 
+            RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -287,15 +315,33 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Obtener una lista de registros
+     * @return 
+     */
     public List<TblHomologacion> findTblHomologacionEntities() {
         return findTblHomologacionEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Método que lsita la información previamente guardada
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<TblHomologacion> findTblHomologacionEntities(int maxResults, int firstResult) {
         return findTblHomologacionEntities(false, maxResults, firstResult);
     }
 
-    private List<TblHomologacion> findTblHomologacionEntities(boolean all, int maxResults, int firstResult) {
+    /**
+     * Descripción: Método que lista la informacio´n previamente guardada
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
+    private List<TblHomologacion> findTblHomologacionEntities(boolean all, 
+            int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -311,6 +357,11 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que busca un solo registro
+     * @param id
+     * @return 
+     */
     public TblHomologacion findTblHomologacion(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -320,6 +371,10 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene cantidad de registros
+     * @return 
+     */
     public int getTblHomologacionCount() {
         EntityManager em = getEntityManager();
         try {
@@ -333,7 +388,17 @@ public class TblHomologacionJpaController implements Serializable {
         }
     }
 
-    public List<TblHomologacion> findTblHomologacionEntitiesBusqueda(boolean all, int maxResults, int firstResult, TblHomologacion datosBuqueda) {
+    /**
+     * Descripción: Método que obtiene homologación partiendo de unos criterios 
+     * de búsqueda
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @param datosBuqueda
+     * @return 
+     */
+    public List<TblHomologacion> findTblHomologacionEntitiesBusqueda(boolean all,
+            int maxResults, int firstResult, TblHomologacion datosBuqueda) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();

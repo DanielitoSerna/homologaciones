@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import java.io.Serializable;
@@ -21,23 +16,39 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
- *
- * @author dsernama
+ * Objtetivo: Administrar las operaciones para la tabla usuarios
+ * @author Daniel Serna
  */
 public class TblUsuarioJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblUsuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(TblUsuario tblUsuario) throws PreexistingEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite guardar información
+     * @param tblUsuario
+     * @throws PreexistingEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void create(TblUsuario tblUsuario) throws PreexistingEntityException, 
+            RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,7 +90,15 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(TblUsuario tblUsuario) throws NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite editar información guardada
+     * @param tblUsuario
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void edit(TblUsuario tblUsuario) throws NonexistentEntityException, 
+            RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -136,6 +155,13 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite eliminar información previamente guardada
+     * @param id
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
@@ -174,14 +200,31 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene un listado de información
+     * @return 
+     */
     public List<TblUsuario> findTblUsuarioEntities() {
         return findTblUsuarioEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Método que obtiene un listado de información
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<TblUsuario> findTblUsuarioEntities(int maxResults, int firstResult) {
         return findTblUsuarioEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * Descripción: Método que obtiene un listado de información
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     private List<TblUsuario> findTblUsuarioEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -198,6 +241,11 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite obtener un sólo registro
+     * @param id
+     * @return 
+     */
     public TblUsuario findTblUsuario(String id) {
         EntityManager em = getEntityManager();
         try {
@@ -207,6 +255,10 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que retorna la cantidad de registros
+     * @return 
+     */
     public int getTblUsuarioCount() {
         EntityManager em = getEntityManager();
         try {
@@ -220,6 +272,13 @@ public class TblUsuarioJpaController implements Serializable {
         }
     }
     
+    /**
+     * Descripción: Método que permite obtener un registro a partir del usuario 
+     * y contraseña
+     * @param usuario
+     * @param clave
+     * @return 
+     */
     public TblUsuario findTblUsuario(String usuario, String clave) {
         EntityManager em = getEntityManager();
         Query q = em.createNamedQuery("TblUsuario.findByUsuarioContrasena");

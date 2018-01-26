@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.util;
 
 import java.util.Map;
@@ -16,7 +11,7 @@ import javax.faces.validator.ValidatorException;
 import org.primefaces.validate.ClientValidator;
 
 /**
- *
+ * Objetivo: Validar email
  * @author dsernama
  */
 @FacesValidator("custom.emailValidator")
@@ -27,10 +22,20 @@ public class EmailValidator implements Validator, ClientValidator {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                                                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   
+    /**
+     * 
+     */
     public EmailValidator() {
         pattern = Pattern.compile(EMAIL_PATTERN);
     }
  
+    /**
+     * Descripción. Validar formato de correo electrónico
+     * @param context
+     * @param component
+     * @param value
+     * @throws ValidatorException 
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         if(value == null) {
@@ -43,11 +48,19 @@ public class EmailValidator implements Validator, ClientValidator {
         }
     }
  
+    /**
+     * 
+     * @return 
+     */
     @Override
     public Map<String, Object> getMetadata() {
         return null;
     }
  
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getValidatorId() {
         return "custom.emailValidator";

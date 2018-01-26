@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import java.io.Serializable;
@@ -23,22 +18,36 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar las operaciones de la tabla Universidad
+ * @author Daniel Serna
  */
 public class TblUniversidadJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblUniversidadJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+    /**
+     * Descripción: Método que permite guardar información
+     * @param tblUniversidad
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(TblUniversidad tblUniversidad) throws RollbackFailureException, Exception {
         if (tblUniversidad.getTblHomologacionList() == null) {
             tblUniversidad.setTblHomologacionList(new ArrayList<TblHomologacion>());
@@ -123,7 +132,16 @@ public class TblUniversidadJpaController implements Serializable {
         }
     }
 
-    public void edit(TblUniversidad tblUniversidad) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite editar información previamente guardada
+     * @param tblUniversidad
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void edit(TblUniversidad tblUniversidad) throws IllegalOrphanException,
+            NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -254,6 +272,14 @@ public class TblUniversidadJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite eliminar información guardada
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
@@ -312,14 +338,31 @@ public class TblUniversidadJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite obtener un listado de información
+     * @return 
+     */
     public List<TblUniversidad> findTblUniversidadEntities() {
         return findTblUniversidadEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Método que permite obtener un listado de información
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<TblUniversidad> findTblUniversidadEntities(int maxResults, int firstResult) {
         return findTblUniversidadEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * Descripción: Método que permite listar información guardada
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     private List<TblUniversidad> findTblUniversidadEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -336,6 +379,11 @@ public class TblUniversidadJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite obtener un registro 
+     * @param id
+     * @return 
+     */
     public TblUniversidad findTblUniversidad(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -345,6 +393,10 @@ public class TblUniversidadJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene la cantidad de registos
+     * @return 
+     */
     public int getTblUniversidadCount() {
         EntityManager em = getEntityManager();
         try {

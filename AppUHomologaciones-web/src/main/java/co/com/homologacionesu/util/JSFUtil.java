@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.util;
 
 import java.util.Calendar;
@@ -13,11 +8,19 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Tener métodos para validar en la aplicación
+ * @author Daniel Serna
  */
 public class JSFUtil {
 
+    /**
+     * Descripciòn: Mètodo que obtiene la fuente para la generaciònd el excel
+     * @param fontColor
+     * @param fontHeight
+     * @param fontBold
+     * @param workbook
+     * @return 
+     */
     public static HSSFFont createFont(short fontColor, short fontHeight,
             boolean fontBold, HSSFWorkbook workbook) {
 
@@ -30,6 +33,16 @@ public class JSFUtil {
         return font;
     }
 
+    /**
+     * Descripciòn: Mètodo que proporciona el estilo al excel generado
+     * @param font
+     * @param cellAlign
+     * @param cellColor
+     * @param cellBorder
+     * @param cellBorderColor
+     * @param workbook
+     * @return 
+     */
     public static HSSFCellStyle createStyle(HSSFFont font, short cellAlign,
             short cellColor, boolean cellBorder, short cellBorderColor,
             HSSFWorkbook workbook) {
@@ -55,6 +68,12 @@ public class JSFUtil {
         return style;
     }
 
+    /**
+     * Descripciòn: Mètodo que suma y resta fechas
+     * @param fecha
+     * @param dias
+     * @return 
+     */
     public static Date sumarRestarDiasFecha(Date fecha, int dias) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha); // Configuramos la fecha que se recibe

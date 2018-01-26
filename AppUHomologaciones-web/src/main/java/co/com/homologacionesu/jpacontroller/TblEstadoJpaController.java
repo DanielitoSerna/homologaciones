@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import co.com.homologacionesu.entidades.TblEstado;
@@ -26,23 +21,39 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar operaciones para la entidad estado
+ * @author Daniel Serna
  */
 public class TblEstadoJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblEstadoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(TblEstado tblEstado) throws PreexistingEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite guardar registros de tipo TblEstado
+     * @param tblEstado
+     * @throws PreexistingEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void create(TblEstado tblEstado) throws PreexistingEntityException, 
+            RollbackFailureException, Exception {
         if (tblEstado.getTblMateriasList() == null) {
             tblEstado.setTblMateriasList(new ArrayList<TblMaterias>());
         }
@@ -156,7 +167,16 @@ public class TblEstadoJpaController implements Serializable {
         }
     }
 
-    public void edit(TblEstado tblEstado) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite editar un registro
+     * @param tblEstado
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void edit(TblEstado tblEstado) throws IllegalOrphanException, 
+            NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -329,7 +349,16 @@ public class TblEstadoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite eliminar un registro
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void destroy(Long id) throws IllegalOrphanException, 
+            NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -396,14 +425,26 @@ public class TblEstadoJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Obtener listado de información
+     * @return 
+     */
     public List<TblEstado> findTblEstadoEntities() {
         return findTblEstadoEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Obtener listado de información
+     * @return 
+     */
     public List<TblEstado> findTblEstadoEntities(int maxResults, int firstResult) {
         return findTblEstadoEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * Descripción: Obtener listado de información
+     * @return 
+     */
     private List<TblEstado> findTblEstadoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -420,6 +461,11 @@ public class TblEstadoJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Obtener un registro 
+    * @param id
+     * @return 
+     */
     public TblEstado findTblEstado(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -429,6 +475,9 @@ public class TblEstadoJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Obtener cantidad de registros
+     */
     public int getTblEstadoCount() {
         EntityManager em = getEntityManager();
         try {

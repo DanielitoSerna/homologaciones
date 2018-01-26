@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.filter;
 
 import co.com.homologacionesu.beans.LoginBean;
@@ -23,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author dsernama
+ * @author Daniel Serna
  */
 public class LoginFilter implements Filter {
 
@@ -43,26 +38,6 @@ public class LoginFilter implements Filter {
             log("LoginFilter:DoBeforeProcessing");
         }
 
-        // Write code here to process the request and/or response before
-        // the rest of the filter chain is invoked.
-        // For example, a logging filter might log items on the request object,
-        // such as the parameters.
-        /*
-	for (Enumeration en = request.getParameterNames(); en.hasMoreElements(); ) {
-	    String name = (String)en.nextElement();
-	    String values[] = request.getParameterValues(name);
-	    int n = values.length;
-	    StringBuffer buf = new StringBuffer();
-	    buf.append(name);
-	    buf.append("=");
-	    for(int i=0; i < n; i++) {
-	        buf.append(values[i]);
-	        if (i < n-1)
-	            buf.append(",");
-	    }
-	    log(buf.toString());
-	}
-         */
     }
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
@@ -75,19 +50,6 @@ public class LoginFilter implements Filter {
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log the attributes on the
         // request object after the request has been processed. 
-        /*
-	for (Enumeration en = request.getAttributeNames(); en.hasMoreElements(); ) {
-	    String name = (String)en.nextElement();
-	    Object value = request.getAttribute(name);
-	    log("attribute: " + name + "=" + value.toString());
-
-	}
-         */
-        // For example, a filter might append something to the response.
-        /*
-	PrintWriter respOut = new PrintWriter(response.getWriter());
-	respOut.println("<P><B>This has been appended by an intrusive filter.</B>");
-         */
     }
     
     private boolean noProteger(String urlStr) {

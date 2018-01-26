@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import java.io.Serializable;
@@ -24,22 +19,36 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
- *
- * @author dsernama
+ * Objetivo: Administrar las operaciones de programas
+ * @author Daniel Serna
  */
 public class TblProgramasJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblProgramasJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+    /**
+     * Descripción: Método que permite crear un nuevo registro
+     * @param tblProgramas
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(TblProgramas tblProgramas) throws RollbackFailureException, Exception {
         if (tblProgramas.getTblMateriasList() == null) {
             tblProgramas.setTblMateriasList(new ArrayList<TblMaterias>());
@@ -133,6 +142,15 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite modificar información previamente 
+     * guardada
+     * @param tblProgramas
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void edit(TblProgramas tblProgramas) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
@@ -278,6 +296,14 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite eliminar información
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
@@ -341,14 +367,31 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que lista información previamente guardada
+     * @return 
+     */
     public List<TblProgramas> findTblProgramasEntities() {
         return findTblProgramasEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Método que lista información previamente guardada
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<TblProgramas> findTblProgramasEntities(int maxResults, int firstResult) {
         return findTblProgramasEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * Descripción: Método que lista información previamente guardada
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     private List<TblProgramas> findTblProgramasEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -365,6 +408,11 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite obtener un registro
+     * @param id
+     * @return 
+     */
     public TblProgramas findTblProgramas(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -374,6 +422,10 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que permite obtener la cantidad de registros
+     * @return 
+     */
     public int getTblProgramasCount() {
         EntityManager em = getEntityManager();
         try {
@@ -387,6 +439,12 @@ public class TblProgramasJpaController implements Serializable {
         }
     }
     
+    /**
+     * Descripción: Método que consulta por criterio de búsqueda igual a 
+     * Universidad
+     * @param tblUniversidad
+     * @return 
+     */
     public List<TblProgramas> consultarPorUniversidad(TblUniversidad tblUniversidad){
         EntityManager em = getEntityManager();
         Query q = em.createNamedQuery("TblProgramas.findByUniversidad");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.com.homologacionesu.jpacontroller;
 
 import java.io.Serializable;
@@ -30,16 +25,32 @@ public class TblRolesJpaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     * @param emf 
+     */
     public TblRolesJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     * 
+     * @return 
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(TblRoles tblRoles) throws PreexistingEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que permite crear información en base de datos
+     * @param tblRoles
+     * @throws PreexistingEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void create(TblRoles tblRoles) throws PreexistingEntityException, 
+            RollbackFailureException, Exception {
         if (tblRoles.getTblUsuarioList() == null) {
             tblRoles.setTblUsuarioList(new ArrayList<TblUsuario>());
         }
@@ -90,7 +101,16 @@ public class TblRolesJpaController implements Serializable {
         }
     }
 
-    public void edit(TblRoles tblRoles) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción: Método que edita información previamente guardada
+     * @param tblRoles
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void edit(TblRoles tblRoles) throws IllegalOrphanException, 
+            NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -165,7 +185,16 @@ public class TblRolesJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
+    /**
+     * Descripción. Método que permite eliminar la información 
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    public void destroy(Long id) throws IllegalOrphanException,
+            NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -209,14 +238,31 @@ public class TblRolesJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene un listado de información
+     * @return 
+     */
     public List<TblRoles> findTblRolesEntities() {
         return findTblRolesEntities(true, -1, -1);
     }
 
+    /**
+     * Descripción: Método que lista información 
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<TblRoles> findTblRolesEntities(int maxResults, int firstResult) {
         return findTblRolesEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * Descripción: Método que lista información previamente guardada
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     private List<TblRoles> findTblRolesEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -233,6 +279,11 @@ public class TblRolesJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene un registro 
+     * @param id
+     * @return 
+     */
     public TblRoles findTblRoles(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -242,6 +293,10 @@ public class TblRolesJpaController implements Serializable {
         }
     }
 
+    /**
+     * Descripción: Método que obtiene la cantidad de registros
+     * @return 
+     */
     public int getTblRolesCount() {
         EntityManager em = getEntityManager();
         try {
