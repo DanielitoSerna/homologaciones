@@ -11,6 +11,7 @@ import co.com.homologacionesu.entidades.TblMaterias;
 import java.util.ArrayList;
 import java.util.List;
 import co.com.homologacionesu.entidades.TblHomologacion;
+import co.com.homologacionesu.entidades.TblPlanPrograma;
 import co.com.homologacionesu.entidades.TblProgramas;
 import co.com.homologacionesu.jpacontroller.exceptions.IllegalOrphanException;
 import co.com.homologacionesu.jpacontroller.exceptions.NonexistentEntityException;
@@ -59,6 +60,9 @@ public class TblProgramasJpaController implements Serializable {
         if (tblProgramas.getTblHomologacionList1() == null) {
             tblProgramas.setTblHomologacionList1(new ArrayList<TblHomologacion>());
         }
+        if (tblProgramas.getTblPlanProgramaList() == null) {
+            tblProgramas.setTblPlanProgramaList(new ArrayList<TblPlanPrograma>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -91,6 +95,12 @@ public class TblProgramasJpaController implements Serializable {
                 attachedTblHomologacionList1.add(tblHomologacionList1TblHomologacionToAttach);
             }
             tblProgramas.setTblHomologacionList1(attachedTblHomologacionList1);
+            List<TblPlanPrograma> attachedTblPlanProgramaList = new ArrayList<>();
+            for (TblPlanPrograma tblPlanProgramaListTblPlanProgramaToAttach : tblProgramas.getTblPlanProgramaList()) {
+                tblPlanProgramaListTblPlanProgramaToAttach = em.getReference(tblPlanProgramaListTblPlanProgramaToAttach.getClass(), tblPlanProgramaListTblPlanProgramaToAttach.getIdPlanPrograma());
+                attachedTblPlanProgramaList.add(tblPlanProgramaListTblPlanProgramaToAttach);
+            }
+            tblProgramas.setTblPlanProgramaList(attachedTblPlanProgramaList);
             em.persist(tblProgramas);
             if (idEstado != null) {
                 idEstado.getTblProgramasList().add(tblProgramas);
@@ -125,6 +135,15 @@ public class TblProgramasJpaController implements Serializable {
                 if (oldProgramaOrigenOfTblHomologacionList1TblHomologacion != null) {
                     oldProgramaOrigenOfTblHomologacionList1TblHomologacion.getTblHomologacionList1().remove(tblHomologacionList1TblHomologacion);
                     oldProgramaOrigenOfTblHomologacionList1TblHomologacion = em.merge(oldProgramaOrigenOfTblHomologacionList1TblHomologacion);
+                }
+            }
+            for (TblPlanPrograma tblPlanProgramaListTblPlanPrograma : tblProgramas.getTblPlanProgramaList()) {
+                TblProgramas oldIdProgramaOfTblPlanProgramaListTblPlanPrograma = tblPlanProgramaListTblPlanPrograma.getIdPrograma();
+                tblPlanProgramaListTblPlanPrograma.setIdPrograma(tblProgramas);
+                tblPlanProgramaListTblPlanPrograma = em.merge(tblPlanProgramaListTblPlanPrograma);
+                if (oldIdProgramaOfTblPlanProgramaListTblPlanPrograma != null) {
+                    oldIdProgramaOfTblPlanProgramaListTblPlanPrograma.getTblPlanProgramaList().remove(tblPlanProgramaListTblPlanPrograma);
+                    oldIdProgramaOfTblPlanProgramaListTblPlanPrograma = em.merge(oldIdProgramaOfTblPlanProgramaListTblPlanPrograma);
                 }
             }
             em.getTransaction().commit();
@@ -167,6 +186,8 @@ public class TblProgramasJpaController implements Serializable {
             List<TblHomologacion> tblHomologacionListNew = tblProgramas.getTblHomologacionList();
             List<TblHomologacion> tblHomologacionList1Old = persistentTblProgramas.getTblHomologacionList1();
             List<TblHomologacion> tblHomologacionList1New = tblProgramas.getTblHomologacionList1();
+            List<TblPlanPrograma> tblPlanProgramaListOld = persistentTblProgramas.getTblPlanProgramaList();
+            List<TblPlanPrograma> tblPlanProgramaListNew = tblProgramas.getTblPlanProgramaList();
             List<String> illegalOrphanMessages = null;
             for (TblMaterias tblMateriasListOldTblMaterias : tblMateriasListOld) {
                 if (!tblMateriasListNew.contains(tblMateriasListOldTblMaterias)) {
@@ -190,6 +211,14 @@ public class TblProgramasJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<>();
                     }
                     illegalOrphanMessages.add("You must retain TblHomologacion " + tblHomologacionList1OldTblHomologacion + " since its programaOrigen field is not nullable.");
+                }
+            }
+            for (TblPlanPrograma tblPlanProgramaListOldTblPlanPrograma : tblPlanProgramaListOld) {
+                if (!tblPlanProgramaListNew.contains(tblPlanProgramaListOldTblPlanPrograma)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<>();
+                    }
+                    illegalOrphanMessages.add("You must retain TblPlanPrograma " + tblPlanProgramaListOldTblPlanPrograma + " since its idPrograma field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -224,6 +253,13 @@ public class TblProgramasJpaController implements Serializable {
             }
             tblHomologacionList1New = attachedTblHomologacionList1New;
             tblProgramas.setTblHomologacionList1(tblHomologacionList1New);
+            List<TblPlanPrograma> attachedTblPlanProgramaListNew = new ArrayList<>();
+            for (TblPlanPrograma tblPlanProgramaListNewTblPlanProgramaToAttach : tblPlanProgramaListNew) {
+                tblPlanProgramaListNewTblPlanProgramaToAttach = em.getReference(tblPlanProgramaListNewTblPlanProgramaToAttach.getClass(), tblPlanProgramaListNewTblPlanProgramaToAttach.getIdPlanPrograma());
+                attachedTblPlanProgramaListNew.add(tblPlanProgramaListNewTblPlanProgramaToAttach);
+            }
+            tblPlanProgramaListNew = attachedTblPlanProgramaListNew;
+            tblProgramas.setTblPlanProgramaList(tblPlanProgramaListNew);
             tblProgramas = em.merge(tblProgramas);
             if (idEstadoOld != null && !idEstadoOld.equals(idEstadoNew)) {
                 idEstadoOld.getTblProgramasList().remove(tblProgramas);
@@ -271,6 +307,17 @@ public class TblProgramasJpaController implements Serializable {
                     if (oldProgramaOrigenOfTblHomologacionList1NewTblHomologacion != null && !oldProgramaOrigenOfTblHomologacionList1NewTblHomologacion.equals(tblProgramas)) {
                         oldProgramaOrigenOfTblHomologacionList1NewTblHomologacion.getTblHomologacionList1().remove(tblHomologacionList1NewTblHomologacion);
                         oldProgramaOrigenOfTblHomologacionList1NewTblHomologacion = em.merge(oldProgramaOrigenOfTblHomologacionList1NewTblHomologacion);
+                    }
+                }
+            }
+            for (TblPlanPrograma tblPlanProgramaListNewTblPlanPrograma : tblPlanProgramaListNew) {
+                if (!tblPlanProgramaListOld.contains(tblPlanProgramaListNewTblPlanPrograma)) {
+                    TblProgramas oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma = tblPlanProgramaListNewTblPlanPrograma.getIdPrograma();
+                    tblPlanProgramaListNewTblPlanPrograma.setIdPrograma(tblProgramas);
+                    tblPlanProgramaListNewTblPlanPrograma = em.merge(tblPlanProgramaListNewTblPlanPrograma);
+                    if (oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma != null && !oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma.equals(tblProgramas)) {
+                        oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma.getTblPlanProgramaList().remove(tblPlanProgramaListNewTblPlanPrograma);
+                        oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma = em.merge(oldIdProgramaOfTblPlanProgramaListNewTblPlanPrograma);
                     }
                 }
             }
@@ -337,6 +384,13 @@ public class TblProgramasJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<>();
                 }
                 illegalOrphanMessages.add("This TblProgramas (" + tblProgramas + ") cannot be destroyed since the TblHomologacion " + tblHomologacionList1OrphanCheckTblHomologacion + " in its tblHomologacionList1 field has a non-nullable programaOrigen field.");
+            }
+            List<TblPlanPrograma> tblPlanProgramaListOrphanCheck = tblProgramas.getTblPlanProgramaList();
+            for (TblPlanPrograma tblPlanProgramaListOrphanCheckTblPlanPrograma : tblPlanProgramaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<>();
+                }
+                illegalOrphanMessages.add("This TblProgramas (" + tblProgramas + ") cannot be destroyed since the TblPlanPrograma " + tblPlanProgramaListOrphanCheckTblPlanPrograma + " in its tblPlanProgramaList field has a non-nullable idPrograma field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

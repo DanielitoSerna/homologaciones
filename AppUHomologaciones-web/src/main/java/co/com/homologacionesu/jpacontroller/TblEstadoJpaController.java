@@ -13,6 +13,7 @@ import co.com.homologacionesu.entidades.TblRoles;
 import co.com.homologacionesu.entidades.TblUniversidad;
 import co.com.homologacionesu.entidades.TblProgramas;
 import co.com.homologacionesu.entidades.TblUsuario;
+import co.com.homologacionesu.entidades.TblPlanPrograma;
 import co.com.homologacionesu.jpacontroller.exceptions.IllegalOrphanException;
 import co.com.homologacionesu.jpacontroller.exceptions.NonexistentEntityException;
 import co.com.homologacionesu.jpacontroller.exceptions.PreexistingEntityException;
@@ -69,6 +70,9 @@ public class TblEstadoJpaController implements Serializable {
         if (tblEstado.getTblUsuarioList() == null) {
             tblEstado.setTblUsuarioList(new ArrayList<TblUsuario>());
         }
+        if (tblEstado.getTblPlanProgramaList() == null) {
+            tblEstado.setTblPlanProgramaList(new ArrayList<TblPlanPrograma>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -103,6 +107,12 @@ public class TblEstadoJpaController implements Serializable {
                 attachedTblUsuarioList.add(tblUsuarioListTblUsuarioToAttach);
             }
             tblEstado.setTblUsuarioList(attachedTblUsuarioList);
+            List<TblPlanPrograma> attachedTblPlanProgramaList = new ArrayList<>();
+            for (TblPlanPrograma tblPlanProgramaListTblPlanProgramaToAttach : tblEstado.getTblPlanProgramaList()) {
+                tblPlanProgramaListTblPlanProgramaToAttach = em.getReference(tblPlanProgramaListTblPlanProgramaToAttach.getClass(), tblPlanProgramaListTblPlanProgramaToAttach.getIdPlanPrograma());
+                attachedTblPlanProgramaList.add(tblPlanProgramaListTblPlanProgramaToAttach);
+            }
+            tblEstado.setTblPlanProgramaList(attachedTblPlanProgramaList);
             em.persist(tblEstado);
             for (TblMaterias tblMateriasListTblMaterias : tblEstado.getTblMateriasList()) {
                 TblEstado oldIdEstadoOfTblMateriasListTblMaterias = tblMateriasListTblMaterias.getIdEstado();
@@ -149,6 +159,15 @@ public class TblEstadoJpaController implements Serializable {
                     oldIdEstadoOfTblUsuarioListTblUsuario = em.merge(oldIdEstadoOfTblUsuarioListTblUsuario);
                 }
             }
+            for (TblPlanPrograma tblPlanProgramaListTblPlanPrograma : tblEstado.getTblPlanProgramaList()) {
+                TblEstado oldIdEstadoOfTblPlanProgramaListTblPlanPrograma = tblPlanProgramaListTblPlanPrograma.getIdEstado();
+                tblPlanProgramaListTblPlanPrograma.setIdEstado(tblEstado);
+                tblPlanProgramaListTblPlanPrograma = em.merge(tblPlanProgramaListTblPlanPrograma);
+                if (oldIdEstadoOfTblPlanProgramaListTblPlanPrograma != null) {
+                    oldIdEstadoOfTblPlanProgramaListTblPlanPrograma.getTblPlanProgramaList().remove(tblPlanProgramaListTblPlanPrograma);
+                    oldIdEstadoOfTblPlanProgramaListTblPlanPrograma = em.merge(oldIdEstadoOfTblPlanProgramaListTblPlanPrograma);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             try {
@@ -192,6 +211,8 @@ public class TblEstadoJpaController implements Serializable {
             List<TblProgramas> tblProgramasListNew = tblEstado.getTblProgramasList();
             List<TblUsuario> tblUsuarioListOld = persistentTblEstado.getTblUsuarioList();
             List<TblUsuario> tblUsuarioListNew = tblEstado.getTblUsuarioList();
+            List<TblPlanPrograma> tblPlanProgramaListOld = persistentTblEstado.getTblPlanProgramaList();
+            List<TblPlanPrograma> tblPlanProgramaListNew = tblEstado.getTblPlanProgramaList();
             List<String> illegalOrphanMessages = null;
             for (TblMaterias tblMateriasListOldTblMaterias : tblMateriasListOld) {
                 if (!tblMateriasListNew.contains(tblMateriasListOldTblMaterias)) {
@@ -233,6 +254,14 @@ public class TblEstadoJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain TblUsuario " + tblUsuarioListOldTblUsuario + " since its idEstado field is not nullable.");
                 }
             }
+            for (TblPlanPrograma tblPlanProgramaListOldTblPlanPrograma : tblPlanProgramaListOld) {
+                if (!tblPlanProgramaListNew.contains(tblPlanProgramaListOldTblPlanPrograma)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<>();
+                    }
+                    illegalOrphanMessages.add("You must retain TblPlanPrograma " + tblPlanProgramaListOldTblPlanPrograma + " since its idEstado field is not nullable.");
+                }
+            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -271,6 +300,13 @@ public class TblEstadoJpaController implements Serializable {
             }
             tblUsuarioListNew = attachedTblUsuarioListNew;
             tblEstado.setTblUsuarioList(tblUsuarioListNew);
+            List<TblPlanPrograma> attachedTblPlanProgramaListNew = new ArrayList<>();
+            for (TblPlanPrograma tblPlanProgramaListNewTblPlanProgramaToAttach : tblPlanProgramaListNew) {
+                tblPlanProgramaListNewTblPlanProgramaToAttach = em.getReference(tblPlanProgramaListNewTblPlanProgramaToAttach.getClass(), tblPlanProgramaListNewTblPlanProgramaToAttach.getIdPlanPrograma());
+                attachedTblPlanProgramaListNew.add(tblPlanProgramaListNewTblPlanProgramaToAttach);
+            }
+            tblPlanProgramaListNew = attachedTblPlanProgramaListNew;
+            tblEstado.setTblPlanProgramaList(tblPlanProgramaListNew);
             tblEstado = em.merge(tblEstado);
             for (TblMaterias tblMateriasListNewTblMaterias : tblMateriasListNew) {
                 if (!tblMateriasListOld.contains(tblMateriasListNewTblMaterias)) {
@@ -324,6 +360,17 @@ public class TblEstadoJpaController implements Serializable {
                     if (oldIdEstadoOfTblUsuarioListNewTblUsuario != null && !oldIdEstadoOfTblUsuarioListNewTblUsuario.equals(tblEstado)) {
                         oldIdEstadoOfTblUsuarioListNewTblUsuario.getTblUsuarioList().remove(tblUsuarioListNewTblUsuario);
                         oldIdEstadoOfTblUsuarioListNewTblUsuario = em.merge(oldIdEstadoOfTblUsuarioListNewTblUsuario);
+                    }
+                }
+            }
+            for (TblPlanPrograma tblPlanProgramaListNewTblPlanPrograma : tblPlanProgramaListNew) {
+                if (!tblPlanProgramaListOld.contains(tblPlanProgramaListNewTblPlanPrograma)) {
+                    TblEstado oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma = tblPlanProgramaListNewTblPlanPrograma.getIdEstado();
+                    tblPlanProgramaListNewTblPlanPrograma.setIdEstado(tblEstado);
+                    tblPlanProgramaListNewTblPlanPrograma = em.merge(tblPlanProgramaListNewTblPlanPrograma);
+                    if (oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma != null && !oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma.equals(tblEstado)) {
+                        oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma.getTblPlanProgramaList().remove(tblPlanProgramaListNewTblPlanPrograma);
+                        oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma = em.merge(oldIdEstadoOfTblPlanProgramaListNewTblPlanPrograma);
                     }
                 }
             }
@@ -405,6 +452,13 @@ public class TblEstadoJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<>();
                 }
                 illegalOrphanMessages.add("This TblEstado (" + tblEstado + ") cannot be destroyed since the TblUsuario " + tblUsuarioListOrphanCheckTblUsuario + " in its tblUsuarioList field has a non-nullable idEstado field.");
+            }
+            List<TblPlanPrograma> tblPlanProgramaListOrphanCheck = tblEstado.getTblPlanProgramaList();
+            for (TblPlanPrograma tblPlanProgramaListOrphanCheckTblPlanPrograma : tblPlanProgramaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<>();
+                }
+                illegalOrphanMessages.add("This TblEstado (" + tblEstado + ") cannot be destroyed since the TblPlanPrograma " + tblPlanProgramaListOrphanCheckTblPlanPrograma + " in its tblPlanProgramaList field has a non-nullable idEstado field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
