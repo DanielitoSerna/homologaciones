@@ -57,6 +57,12 @@ public class TblHomologacion implements Serializable {
     @JoinColumn(name = "universidad_destino", referencedColumnName = "id_universidad")
     @ManyToOne(optional = false)
     private TblUniversidad universidadDestino;
+    @JoinColumn(name = "plan_origen", referencedColumnName = "id_plan_programa")
+    @ManyToOne(optional = false)
+    private TblPlanPrograma planOrigen;
+    @JoinColumn(name = "plan_destino", referencedColumnName = "id_plan_programa")
+    @ManyToOne(optional = false)
+    private TblPlanPrograma planDestino;
 
     /**
      * 
@@ -220,6 +226,38 @@ public class TblHomologacion implements Serializable {
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblHomologacion[ idHomologa=" + idHomologa + " ]";
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public TblPlanPrograma getPlanOrigen() {
+        return planOrigen;
+    }
+
+    /**
+     * 
+     * @param planOrigen 
+     */
+    public void setPlanOrigen(TblPlanPrograma planOrigen) {
+        this.planOrigen = planOrigen;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public TblPlanPrograma getPlanDestino() {
+        return planDestino;
+    }
+
+    /**
+     * 
+     * @param planDestino 
+     */
+    public void setPlanDestino(TblPlanPrograma planDestino) {
+        this.planDestino = planDestino;
     }
     
 }
