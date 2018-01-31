@@ -11,6 +11,7 @@ import co.com.homologacionesu.entidades.TblHomologacion;
 import co.com.homologacionesu.entidades.TblPlanPrograma;
 import co.com.homologacionesu.jpacontroller.exceptions.IllegalOrphanException;
 import co.com.homologacionesu.jpacontroller.exceptions.NonexistentEntityException;
+import co.com.homologacionesu.jpacontroller.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -31,7 +32,7 @@ public class TblPlanProgramaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(TblPlanPrograma tblPlanPrograma) {
+    public void create(TblPlanPrograma tblPlanPrograma) throws RollbackFailureException {
         if (tblPlanPrograma.getTblHomologacionList() == null) {
             tblPlanPrograma.setTblHomologacionList(new ArrayList<TblHomologacion>());
         }
@@ -92,6 +93,13 @@ public class TblPlanProgramaJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            try {
+                em.getTransaction().rollback();
+            } catch (Exception re) {
+                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();

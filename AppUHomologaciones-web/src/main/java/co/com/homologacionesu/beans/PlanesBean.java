@@ -1,17 +1,28 @@
 package co.com.homologacionesu.beans;
 
+import co.com.homologacionesu.entidades.TblEstado;
+import co.com.homologacionesu.entidades.TblMaterias;
+import co.com.homologacionesu.entidades.TblPlanPrograma;
 import co.com.homologacionesu.entidades.TblProgramas;
+import co.com.homologacionesu.jpacontroller.TblEstadoJpaController;
+import co.com.homologacionesu.jpacontroller.TblPlanProgramaJpaController;
 import co.com.homologacionesu.jpacontroller.TblProgramasJpaController;
+import co.com.homologacionesu.jpacontroller.exceptions.RollbackFailureException;
 import co.com.homologacionesu.util.JPAFactory;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -23,7 +34,7 @@ import org.primefaces.event.SelectEvent;
 public class PlanesBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
-    private Long codigo;
+    private String codigo;
     private String nombrePlan;
     private Date fechaInicio;
     private Date fechaVigencia;
@@ -33,12 +44,15 @@ public class PlanesBean implements Serializable{
     private Boolean habilitarBoton;
     private List<TblProgramas> tblProgramases;
     private TblProgramasJpaController tblProgramasJpaController;
+    private TblEstadoJpaController tblEstadoJpaController;
+    private TblPlanProgramaJpaController tblPlanProgramaJpaController;
+    private List<TblPlanPrograma> tblPlanProgramas;
 
     /**
      * 
      * @return 
      */
-    public Long getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
@@ -46,7 +60,7 @@ public class PlanesBean implements Serializable{
      * 
      * @param codigo 
      */
-    public void setCodigo(Long codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -184,13 +198,83 @@ public class PlanesBean implements Serializable{
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
     
+    /**
+     * Descripción: Método que permite cargar información una vez se ingrese a 
+     * la vista
+     */
     @PostConstruct
     public void init(){
         tblProgramasJpaController = 
                 new TblProgramasJpaController(JPAFactory.getFACTORY());
         tblProgramases = tblProgramasJpaController.findTblProgramasEntities();
+        tblPlanProgramaJpaController =
+                new TblPlanProgramaJpaController(JPAFactory.getFACTORY());
+        
+        List<TblPlanPrograma> planProgramas = tblPlanProgramaJpaController.findTblPlanProgramaEntities();
+        tblPlanProgramas = new ArrayList<>();
+        for (TblPlanPrograma planPrograma : planProgramas) {
+            if(!planPrograma.getIdEstado().getDescripcion().equals("INACTIVO")){
+                tblPlanProgramas.add(planPrograma);
+            }
+        }
         
         setHabilitarCodigo(Boolean.TRUE);
         setHabilitarBoton(Boolean.FALSE);
+    }
+    
+    /**
+     * Descripción: Método que permite guardar información del plan
+     * @param actionEvent 
+     */
+    public void guardar(ActionEvent actionEvent){
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage msg = null;
+        estado = new Long(1);
+        tblEstadoJpaController = 
+                new TblEstadoJpaController(JPAFactory.getFACTORY());
+        TblEstado tblEstado = tblEstadoJpaController.findTblEstado(estado);
+        tblProgramasJpaController =
+                new TblProgramasJpaController(JPAFactory.getFACTORY());
+        tblPlanProgramaJpaController =
+                new TblPlanProgramaJpaController(JPAFactory.getFACTORY());
+        TblPlanPrograma tblPlanPrograma = new TblPlanPrograma();
+        
+        if(programa != null){
+            TblProgramas tblProgramas = tblProgramasJpaController.findTblProgramas(programa);
+            if(codigo != null && !codigo.isEmpty() && nombrePlan != null 
+                    && !nombrePlan.isEmpty() && fechaInicio != null 
+                    && fechaVigencia != null){
+                tblPlanPrograma.setCodigoPlan(codigo);
+                tblPlanPrograma.setNombrePlan(nombrePlan);
+                tblPlanPrograma.setFechaInicio(fechaInicio);
+                tblPlanPrograma.setFechaVigencia(fechaVigencia);
+                tblPlanPrograma.setIdEstado(tblEstado);
+                tblPlanPrograma.setIdPrograma(tblProgramas);
+                
+                try {
+                    tblPlanProgramaJpaController.create(tblPlanPrograma);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        "Creado Correctamente", "");
+                    setCodigo("");
+                    setNombrePlan("");
+                    setPrograma(null);
+                    setFechaInicio(null);
+                    setFechaVigencia(null);
+                } catch (RollbackFailureException ex) {
+                    Logger.getLogger(PlanesBean.class.getName()).log(Level.SEVERE, null, ex);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Error al crear", "");
+                }
+                 
+            }else{
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    "Favor ingesar información en todos los campos", "");
+            }
+        }else{
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    "Debe seleccionar el campo Programa", "");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        context.addCallbackParam("view", "vw/planes.xhtml");
     }
 }

@@ -16,7 +16,7 @@
             <p:panel header="Planes">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="codigo" value="Código:" />
-                    <p:inputNumber value="#{planesBean.codigo}" id="codigo"
+                    <p:inputText value="#{planesBean.codigo}" id="codigo"
                                    required="false" label="codigo" 
                                    disabled="#{!planesBean.habilitarCodigo}" />
                     <h:outputLabel for="nombre" value="Nombre Plan:" />
@@ -43,7 +43,7 @@
                     </p:selectOneMenu>
                     <f:facet name="footer">
                         <p:commandButton id="guardarButton" value="Guardar"
-                                         actionListener="#{materiaBean.guardar}" 
+                                         actionListener="#{planesBean.guardar}" 
                                          update=":mensajes, :form"
                                          rendered="#{!planesBean.habilitarBoton}"
                                          />
@@ -60,6 +60,19 @@
                                          rendered="#{planesBean.habilitarBoton}"
                                          />
                     </f:facet>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:dataTable id="basicDT" var="mat" value="#{materiaBean.tblMateriases}"
+                                 paginator="true" rows="#{materiaBean.tblMateriases.size()}"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+                                 {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 lazy="true"
+                                 rowsPerPageTemplate="5,10,15">
+                    
+                        <f:facet name="header">
+                            Listado de información
+                        </f:facet>
+                    </p:dataTable>
                 </h:panelGrid>
             </p:panel>
         </h:form>
