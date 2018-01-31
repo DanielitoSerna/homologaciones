@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Plan Académico</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body style="text-align:center">
+        <ui:include src="/vw/menu.xhtml" />
+        <p:growl id="mensajes" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panel header="Planes">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="codigo" value="Código:" />
+                    <p:inputNumber value="#{planesBean.codigo}" id="codigo"
+                                   required="false" label="codigo" 
+                                   disabled="#{!planesBean.habilitarCodigo}" />
+                    <h:outputLabel for="nombre" value="Nombre Plan:" />
+                    <p:inputText value="#{planesBean.nombrePlan}" id="nombre"
+                                 required="false" label="nombre" />
+                    <h:outputLabel for="fechaInicio" value="Fecha Inicio:" />
+                    <p:calendar id="fechaInicio" value="#{planesBean.fechaInicio}">
+                        <p:ajax event="dateSelect" listener="#{planesBean.onDateSelect}"/>
+                    </p:calendar>
+                    <h:outputLabel for="fechaVigencia" value="Fecha Vigencia:" />
+                    <p:calendar id="fechaVigencia" value="#{planesBean.fechaVigencia}">
+                        <p:ajax event="dateSelect" listener="#{planesBean.onDateSelect}"/>
+                    </p:calendar>
+                    <h:outputLabel for="selectPrograma" value="Nombre Programa: " />
+                    <p:selectOneMenu  id="selectPrograma" 
+                                      value="#{planesBean.programa}">
+                        <f:selectItem id="itemSeleccione" 
+                                      itemValue=""                                          
+                                      itemLabel="----Seleccione----"/>
+                        <f:selectItems value="#{planesBean.tblProgramases}" 
+                                       var="entry" 
+                                       itemLabel="#{entry.nombrePrograma}" 
+                                       itemValue="#{entry.idPrograma}" />
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <p:commandButton id="guardarButton" value="Guardar"
+                                         actionListener="#{materiaBean.guardar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{!planesBean.habilitarBoton}"
+                                         />
+
+                        <p:commandButton id="modificarButton" value="Modificar"
+                                         actionListener="#{materiaBean.modificar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{planesBean.habilitarBoton}"
+                                         />
+
+                        <p:commandButton id="eliminarButton" value="Eliminar"
+                                         actionListener="#{materiaBean.eliminar}" 
+                                         update=":mensajes, :form"
+                                         rendered="#{planesBean.habilitarBoton}"
+                                         />
+                    </f:facet>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

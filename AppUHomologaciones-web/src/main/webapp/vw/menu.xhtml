@@ -29,11 +29,15 @@
                             icon="ui-icon-disk" 
                             rendered="#{loginBean.todo}"/>
 
-                <p:submenu label="Carreras y Materias" 
+                <p:submenu label="Carreras, Planes y Materias" 
                            icon="ui-icon-pin-s">
                     <p:menuitem value="Carreras" 
                                 url="/vw/programas.xhtml" 
                                 icon="ui-icon-clipboard" />
+                    <p:separator />
+                    <p:menuitem value="Planes" 
+                                url="/vw/planes.xhtml" 
+                                icon="fa-leanpub" />
                     <p:separator />
                     <p:menuitem value="Materias" 
                                 url="/vw/materias.xhtml" 

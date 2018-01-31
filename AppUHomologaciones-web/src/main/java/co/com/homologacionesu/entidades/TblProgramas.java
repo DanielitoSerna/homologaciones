@@ -40,14 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
             query = "SELECT t FROM TblProgramas t WHERE t.idUniversidad = :idUniversidad")})
 public class TblProgramas implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "facultad_pertenece")
-    private String facultadPertenece;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
-    private List<TblPlanPrograma> tblPlanProgramaList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +68,8 @@ public class TblProgramas implements Serializable {
     @JoinColumn(name = "id_universidad", referencedColumnName = "id_universidad")
     @ManyToOne(optional = false)
     private TblUniversidad idUniversidad;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
+    private List<TblPlanPrograma> tblPlanProgramaList;
 
     /**
      * 
@@ -270,22 +264,6 @@ public class TblProgramas implements Serializable {
     @Override
     public String toString() {
         return "co.com.homologacionesu.entidades.TblProgramas[ idPrograma=" + idPrograma + " ]";
-    }
-
-    /**
-     * 
-     * @return 
-     */
-    public String getFacultadPertenece() {
-        return facultadPertenece;
-    }
-
-    /**
-     * 
-     * @param facultadPertenece 
-     */
-    public void setFacultadPertenece(String facultadPertenece) {
-        this.facultadPertenece = facultadPertenece;
     }
 
     /**

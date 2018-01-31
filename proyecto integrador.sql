@@ -73,7 +73,6 @@ CREATE TABLE tbl_programas
 	id_programa serial NOT NULL,
 	codigo_interno character varying(20) NOT NULL,
 	nombre_programa character varying(200) NOT NULL,
-	facultad_pertenece character varying(2) NOT NULL,
 	id_universidad integer NOT NULL,
 	id_estado numeric(10,0) NOT NULL,
 	CONSTRAINT tbl_programas_pkey PRIMARY KEY (id_programa),
