@@ -49,21 +49,21 @@
                                          />
 
                         <p:commandButton id="modificarButton" value="Modificar"
-                                         actionListener="#{materiaBean.modificar}" 
+                                         actionListener="#{planesBean.modificar}" 
                                          update=":mensajes, :form"
                                          rendered="#{planesBean.habilitarBoton}"
                                          />
 
                         <p:commandButton id="eliminarButton" value="Eliminar"
-                                         actionListener="#{materiaBean.eliminar}" 
+                                         actionListener="#{planesBean.eliminar}" 
                                          update=":mensajes, :form"
                                          rendered="#{planesBean.habilitarBoton}"
                                          />
                     </f:facet>
                 </h:panelGrid>
                 <h:panelGrid columns="2" cellpadding="5">
-                    <p:dataTable id="basicDT" var="mat" value="#{materiaBean.tblMateriases}"
-                                 paginator="true" rows="#{materiaBean.tblMateriases.size()}"
+                    <p:dataTable id="basicDT" var="mat" value="#{planesBean.tblPlanProgramas}"
+                                 paginator="true" rows="#{planesBean.tblPlanProgramas.size()}"
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
                                  {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  lazy="true"
@@ -72,6 +72,32 @@
                         <f:facet name="header">
                             Listado de información
                         </f:facet>
+                        <p:column headerText="Código Plan" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.codigoPlan}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Plan" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.nombrePlan}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Inicio" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.fechaInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Fecha Vigencia" style="width:20px;text-align: center">
+                            <h:outputText value="#{mat.fechaVigencia}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="width:20px;text-align: center">
+                            <p:commandButton update=":mensajes, form" 
+                                             icon="ui-icon-search" title="View"
+                                             id="verButton"
+                                             action="#{planesBean.seleccionarObjeto}"
+                                             >
+                                <f:setPropertyActionListener value="#{mat}" 
+                                                             target="#{planesBean.tblPlanPrograma}" />
+                           </p:commandButton>
+                       </p:column>
                     </p:dataTable>
                 </h:panelGrid>
             </p:panel>

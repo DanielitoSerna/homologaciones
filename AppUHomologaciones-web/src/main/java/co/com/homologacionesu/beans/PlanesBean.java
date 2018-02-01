@@ -1,14 +1,16 @@
 package co.com.homologacionesu.beans;
 
 import co.com.homologacionesu.entidades.TblEstado;
-import co.com.homologacionesu.entidades.TblMaterias;
+import co.com.homologacionesu.entidades.TblHomologacion;
 import co.com.homologacionesu.entidades.TblPlanPrograma;
 import co.com.homologacionesu.entidades.TblProgramas;
 import co.com.homologacionesu.jpacontroller.TblEstadoJpaController;
 import co.com.homologacionesu.jpacontroller.TblPlanProgramaJpaController;
 import co.com.homologacionesu.jpacontroller.TblProgramasJpaController;
+import co.com.homologacionesu.jpacontroller.exceptions.NonexistentEntityException;
 import co.com.homologacionesu.jpacontroller.exceptions.RollbackFailureException;
 import co.com.homologacionesu.util.JPAFactory;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class PlanesBean implements Serializable{
     private TblEstadoJpaController tblEstadoJpaController;
     private TblPlanProgramaJpaController tblPlanProgramaJpaController;
     private List<TblPlanPrograma> tblPlanProgramas;
+    private TblPlanPrograma tblPlanPrograma;
 
     /**
      * 
@@ -187,6 +190,38 @@ public class PlanesBean implements Serializable{
     public void setTblProgramases(List<TblProgramas> tblProgramases) {
         this.tblProgramases = tblProgramases;
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public List<TblPlanPrograma> getTblPlanProgramas() {
+        return tblPlanProgramas;
+    }
+
+    /**
+     * 
+     * @param tblPlanProgramas 
+     */
+    public void setTblPlanProgramas(List<TblPlanPrograma> tblPlanProgramas) {
+        this.tblPlanProgramas = tblPlanProgramas;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public TblPlanPrograma getTblPlanPrograma() {
+        return tblPlanPrograma;
+    }
+
+    /**
+     * 
+     * @param tblPlanPrograma 
+     */
+    public void setTblPlanPrograma(TblPlanPrograma tblPlanPrograma) {
+        this.tblPlanPrograma = tblPlanPrograma;
+    }
     
     /**
      * Descripción: Método que permite captura la fecha del calendario
@@ -237,24 +272,25 @@ public class PlanesBean implements Serializable{
                 new TblProgramasJpaController(JPAFactory.getFACTORY());
         tblPlanProgramaJpaController =
                 new TblPlanProgramaJpaController(JPAFactory.getFACTORY());
-        TblPlanPrograma tblPlanPrograma = new TblPlanPrograma();
+        TblPlanPrograma tblPlanProgram = new TblPlanPrograma();
         
         if(programa != null){
             TblProgramas tblProgramas = tblProgramasJpaController.findTblProgramas(programa);
             if(codigo != null && !codigo.isEmpty() && nombrePlan != null 
                     && !nombrePlan.isEmpty() && fechaInicio != null 
                     && fechaVigencia != null){
-                tblPlanPrograma.setCodigoPlan(codigo);
-                tblPlanPrograma.setNombrePlan(nombrePlan);
-                tblPlanPrograma.setFechaInicio(fechaInicio);
-                tblPlanPrograma.setFechaVigencia(fechaVigencia);
-                tblPlanPrograma.setIdEstado(tblEstado);
-                tblPlanPrograma.setIdPrograma(tblProgramas);
+                tblPlanProgram.setCodigoPlan(codigo);
+                tblPlanProgram.setNombrePlan(nombrePlan);
+                tblPlanProgram.setFechaInicio(fechaInicio);
+                tblPlanProgram.setFechaVigencia(fechaVigencia);
+                tblPlanProgram.setIdEstado(tblEstado);
+                tblPlanProgram.setIdPrograma(tblProgramas);
                 
                 try {
-                    tblPlanProgramaJpaController.create(tblPlanPrograma);
+                    tblPlanProgramaJpaController.create(tblPlanProgram);
                     msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
                         "Creado Correctamente", "");
+                    tblPlanProgramas.add(tblPlanProgram);
                     setCodigo("");
                     setNombrePlan("");
                     setPrograma(null);
@@ -273,6 +309,122 @@ public class PlanesBean implements Serializable{
         }else{
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
                     "Debe seleccionar el campo Programa", "");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        context.addCallbackParam("view", "vw/planes.xhtml");
+    }
+    
+    /**
+     * Descripción: Método que permite seleccionar un registro del listado
+     * de información 
+     */
+    public void seleccionarObjeto() {
+        nombrePlan = (getTblPlanPrograma().getNombrePlan()!= null
+                    ? getTblPlanPrograma().getNombrePlan(): "");
+        codigo = (getTblPlanPrograma().getCodigoPlan()!= null
+                    ? getTblPlanPrograma().getCodigoPlan(): "");
+        programa = (getTblPlanPrograma().getIdPrograma().getIdPrograma()!= null
+                    ? getTblPlanPrograma().getIdPrograma().getIdPrograma() : 0);
+        fechaInicio = getTblPlanPrograma().getFechaInicio(); 
+        fechaVigencia = getTblPlanPrograma().getFechaVigencia(); 
+        setHabilitarCodigo(Boolean.FALSE);
+        setHabilitarBoton(Boolean.TRUE);
+    }
+    
+    /**
+     * Descripción: Método que permite modificar el registro seleccionado 
+     */
+    public void modificar(){
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage msg = null;
+        estado = new Long(1);
+        tblEstadoJpaController = 
+                new TblEstadoJpaController(JPAFactory.getFACTORY());
+        TblEstado tblEstado = tblEstadoJpaController.findTblEstado(estado);
+        tblProgramasJpaController =
+                new TblProgramasJpaController(JPAFactory.getFACTORY());
+        tblPlanProgramaJpaController =
+                new TblPlanProgramaJpaController(JPAFactory.getFACTORY());
+        TblPlanPrograma tblPlanProgram = new TblPlanPrograma();
+        if(programa != null){
+            TblProgramas tblProgramas = tblProgramasJpaController.findTblProgramas(programa);
+            if(codigo != null && !codigo.isEmpty() && nombrePlan != null 
+                    && !nombrePlan.isEmpty()){
+                tblPlanProgram.setIdPlanPrograma(tblPlanPrograma.getIdPlanPrograma());
+                tblPlanProgram.setCodigoPlan(codigo);
+                tblPlanProgram.setNombrePlan(nombrePlan);
+                tblPlanProgram.setFechaInicio(fechaInicio);
+                tblPlanProgram.setFechaVigencia(fechaVigencia);
+                tblPlanProgram.setIdEstado(tblEstado);
+                tblPlanProgram.setIdPrograma(tblProgramas);
+                tblPlanProgram.setTblHomologacionList(new ArrayList<TblHomologacion>());
+                tblPlanProgram.setTblHomologacionList1(new ArrayList<TblHomologacion>());
+                try {
+                    tblPlanProgramaJpaController.edit(tblPlanProgram);
+                    tblPlanProgramas.remove(tblPlanPrograma);
+                    tblPlanProgramas.add(tblPlanProgram);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        "Modificado Correctamente", "");
+                    setHabilitarCodigo(Boolean.TRUE);
+                    setHabilitarBoton(Boolean.FALSE);
+                    setCodigo("");
+                    setNombrePlan("");
+                    setPrograma(null);
+                    setFechaInicio(null);
+                    setFechaVigencia(null);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(PlanesBean.class.getName()).log(Level.SEVERE, null, ex);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Error al modificar", "");
+                } catch (Exception ex) {
+                    Logger.getLogger(PlanesBean.class.getName()).log(Level.SEVERE, null, ex);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Error al modificar", "");
+                }
+            }else{
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    "Favor ingesar información en todos los campos", "");
+            }
+        }else{
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    "Debe seleccionar el campo Programa", "");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        context.addCallbackParam("view", "vw/planes.xhtml");
+    }
+    
+    public void eliminar(){
+        FacesMessage msg = null;
+        RequestContext context = RequestContext.getCurrentInstance();
+        estado = new Long(2);
+        tblEstadoJpaController = 
+                new TblEstadoJpaController(JPAFactory.getFACTORY());
+        TblEstado tblEstado = tblEstadoJpaController.findTblEstado(estado);
+        tblPlanProgramaJpaController =
+                new TblPlanProgramaJpaController(JPAFactory.getFACTORY());
+        tblPlanPrograma.setIdEstado(tblEstado);
+        
+        try {
+            tblPlanProgramaJpaController.edit(tblPlanPrograma);
+            tblPlanProgramas.remove(tblPlanPrograma);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        "Eliminado Correctamente", "");
+            
+            setCodigo("");
+            setNombrePlan("");
+            setPrograma(null);
+            setFechaInicio(null);
+            setFechaVigencia(null);
+            setHabilitarCodigo(Boolean.TRUE);
+            setHabilitarBoton(Boolean.FALSE);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PlanesBean.class.getName()).log(Level.SEVERE, null, ex);
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Error al eliminar", "");
+        } catch (Exception ex) {
+            Logger.getLogger(PlanesBean.class.getName()).log(Level.SEVERE, null, ex);
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Error al eliminar", "");
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
         context.addCallbackParam("view", "vw/planes.xhtml");
